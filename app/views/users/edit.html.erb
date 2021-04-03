@@ -1,12 +1,9 @@
-<h1>Sign up</h1>
+<h1>Edit Account</h1>
 
 <div>
   <div>
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'shared/error_messages' %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email %>
 
       <%= f.label :password %>
       <%= f.password_field :password %>
@@ -14,10 +11,7 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
 
-      <%= f.label :user_type %>
-      <%= f.select :user_type, ['organization', 'worker']%>
-
-      <%= f.submit "Create my account" %>
+      <%= f.submit "Update my account" %>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,25 @@
+<h1>Edit Organization</h1>
+
+<div>
+  <div>
+    <%= form_with(model: @organization, local: true) do |f| %>
+
+      <%= f.label :org_name %>
+      <%= f.text_field :org_name %>
+
+      <%= f.label :org_description %>
+      <%= f.text_field :org_description %>
+
+      <%= f.label :org_address %>
+      <%= f.text_field :org_address %>
+
+      <%= f.label :org_city %>
+      <%= f.text_field :org_city %>
+
+      <%= f.label :org_state %>
+      <%= f.text_field :org_state %>
+
+      <%= f.submit "Update Organization" %>
+    <% end %>
+  </div>
+</div>

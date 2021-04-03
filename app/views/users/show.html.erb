@@ -1,7 +1,46 @@
 <div>
   <div>
-      <h3>
-        Your Email: <%= @user.email %>
-      </h3>
+    <p>
+      Your Email: <%= @user.email %>
+    </p>
+    <p>
+      Your User Type: <%= @user.user_type %>
+    </p>
+
+    <p>
+      <%= link_to "Create Organization", new_organization_path %>
+    </p>
+  </div>
+
+  <div>
+    <h3>Your Organization</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @user_orgs.each do |org| %>
+          <tr>
+            <td><%= org.org_name %></td>
+            <td><%= org.org_description %></td>
+            <td><%= org.org_address %></td>
+            <td><%= org.org_city %></td>
+            <td><%= org.org_state %></td>
+            <td><%= link_to 'View Shifts', '#' %></td>
+            <td><%= link_to 'Edit Org', edit_organization_path(org.id) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

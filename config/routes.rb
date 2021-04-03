@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # match '*unmatched', to: 'application#render_not_found', via: :all
 
   root 'users#welcome'
-  resources :users
 
-  get    '/signup', to: 'users#new'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+
+  resources :users, only: [:new, :create, :show, :update, :edit]
+  resources :organizations, only: [:new, :create, :show, :edit, :update]
 end
