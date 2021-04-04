@@ -9,4 +9,8 @@ class User < ApplicationRecord
   validates :user_type, presence: true, inclusion: { in: %w(organization worker) }
 
   has_one :organization
+
+  def has_org?
+    Organization.where(user_id: self.id).count == 1
+  end
 end

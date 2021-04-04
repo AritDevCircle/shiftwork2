@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:show, :edit, :update]
+  before_action :logged_in_user, only: %i[show edit update]
+  before_action :set_user, only: %i[ show edit update ]
 
   def welcome
+    @open_shifts = Shift.where(shift_open: true).order("updated_at DESC")
   end
 
   def show
-    @user = User.find(params[:id])
     @user_orgs = Organization.where(user_id: @user.id).order("org_name ASC")
   end
 
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def create
@@ -28,7 +28,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_update_params)
       flash[:success] = "Account updated successfully!"
       redirect_to @user
@@ -39,6 +38,11 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @user
+  end
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :user_type)

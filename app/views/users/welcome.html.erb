@@ -1,3 +1,31 @@
 <p>
   The local Date and Time is <strong><%= Time.now.strftime("%B %d %Y, %I:%M %p") %></strong> <em>(Timezone: <%= Time.now.zone %>)</em>.
 </p>
+
+<h3>All Open Shifts!</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Shift Status</th>
+      <th>Role</th>
+      <th>Description</th>
+      <th>Shift Starts</th>
+      <th>Shift Ends</th>
+      <th>Pay Rate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @open_shifts.each do |shift| %>
+      <tr>
+        <td><% if shift.shift_open %>Open<% else %>Filled<% end %></td>
+        <td><%= shift.shift_role %></td>
+        <td><%= shift.shift_description %></td>
+        <td><%= shift.shift_start.httpdate %></td>
+        <td><%= shift.shift_end.httpdate %></td>
+        <td><%= shift.shift_pay %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

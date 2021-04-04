@@ -1,5 +1,6 @@
 class Organization < ApplicationRecord
   belongs_to :user
+  has_many :shifts
 
   validates :org_name, presence: true
   validates :org_description, presence: true, length: { minimum: 10 }

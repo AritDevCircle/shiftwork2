@@ -14,4 +14,12 @@
  *= require_self
  */
 
- @import "bootstrap";
+@import "bootstrap";
+
+.form-control {
+  width: inherit;
+
+  &.inline {
+    display: inline;
+  }
+}

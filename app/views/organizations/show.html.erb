@@ -1,0 +1,36 @@
+<div>
+  <h3>Your Shifts</h3>
+
+  <p><%= link_to 'Create Shift', new_shift_path %></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Shift Status</th>
+        <th>Role</th>
+        <th>Description</th>
+        <th>Shift Starts</th>
+        <th>Shift Ends</th>
+        <th>Pay Rate</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @org_shifts.each do |shift| %>
+        <tr>
+          <td><% if shift.shift_open %>Open<% else %>Filled<% end %></td>
+          <td><%= shift.shift_role %></td>
+          <td><%= shift.shift_description %></td>
+          <td><%= shift.shift_start.httpdate %></td>
+          <td><%= shift.shift_end.httpdate %></td>
+          <td><%= shift.shift_pay %></td>
+          <td>
+            <%= link_to 'Edit', edit_shift_path(shift.id) %>
+            <%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,46 +1,51 @@
 <div>
   <div>
     <p>
-      Your Email: <%= @user.email %>
-    </p>
-    <p>
-      Your User Type: <%= @user.user_type %>
-    </p>
-
-    <p>
-      <%= link_to "Create Organization", new_organization_path %>
+      Your Email: <%= @user.email %> | Your User Type: <%= @user.user_type %>
     </p>
   </div>
 
-  <div>
-    <h3>Your Organization</h3>
+  <% if @user.user_type == "organization" %>
+    <div>
+      <h3>Your Organization</h3>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Address</th>
-          <th>City</th>
-          <th>State</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
+      <% if @user.has_org? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>State</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
 
-      <tbody>
-        <% @user_orgs.each do |org| %>
-          <tr>
-            <td><%= org.org_name %></td>
-            <td><%= org.org_description %></td>
-            <td><%= org.org_address %></td>
-            <td><%= org.org_city %></td>
-            <td><%= org.org_state %></td>
-            <td><%= link_to 'View Shifts', '#' %></td>
-            <td><%= link_to 'Edit Org', edit_organization_path(org.id) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+          <tbody>
+            <% @user_orgs.each do |org| %>
+              <tr>
+                <td><%= org.org_name %></td>
+                <td><%= org.org_description %></td>
+                <td><%= org.org_address %></td>
+                <td><%= org.org_city %></td>
+                <td><%= org.org_state %></td>
+                <td><%= link_to 'View Shifts', organization_path(org.id) %></td>
+                <td><%= link_to 'Edit Org', edit_organization_path(org.id) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p><%= link_to 'Create Organization', new_organization_path %></p>
+      <% end %>
+    </div>
+  <% else %>
+    <div>
+      <h3>Your Details</h3>
+    </div>
+  <% end %>
+
+  
 </div>

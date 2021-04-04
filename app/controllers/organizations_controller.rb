@@ -1,12 +1,14 @@
 class OrganizationsController < ApplicationController
-  before_action :logged_in_user, only: []
+  before_action :logged_in_user, only: %i[show new create edit update]
+  before_action :set_organization, only: %i[ show edit update ]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   
   def index
+
   end
 
   def show
-    @organization = Organization.find(params[:id])
+    @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
   end
 
   def new
@@ -25,11 +27,9 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
-    @organization = Organization.find(params[:id])
   end
 
   def update
-    @organization = Organization.find(params[:id])
     if @organization.update(organization_params)
       flash[:success] = "Organization updated successfully!"
       redirect_to @organization
@@ -40,6 +40,11 @@ class OrganizationsController < ApplicationController
   end
 
   private
+
+  def set_organization
+    @organization = Organization.find(params[:id])
+    raise ActiveRecord::RecordNotFound unless @organization
+  end
 
   def organization_params
     params.require(:organization).permit(:org_name, :org_description, :org_address, :org_city, :org_state, :user_id)

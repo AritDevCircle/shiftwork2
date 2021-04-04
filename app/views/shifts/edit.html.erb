@@ -1,0 +1,28 @@
+<h1>Edit Shift</h1>
+
+<div>
+  <div>
+    <%= form_with(model: @shift, local: true) do |f| %>
+
+      <%= f.label :shift_open, 'Shift Status' %>
+      <%= f.select(:shift_open, options_for_select([['Open', true], ['Filled', false]], { selected: @shift.shift_open }), prompt: "Select") %>
+
+      <%= f.label :shift_role %>
+      <%= f.text_field :shift_role %>
+
+      <%= f.label :shift_description %>
+      <%= f.text_field :shift_description %>
+
+      <%= f.label :shift_start %>
+      <%= f.datetime_select :shift_start %>
+
+      <%= f.label :shift_end %>
+      <%= f.datetime_select :shift_end %>
+
+      <%= f.label :shift_pay %>
+      <%= f.number_field :shift_pay %>
+
+      <%= f.submit "Update Shift" %>
+    <% end %>
+  </div>
+</div>

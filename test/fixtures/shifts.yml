@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shift_open: false
+  shift_role: MyString
+  shift_description: MyString
+  shift_start: 2021-04-03 19:32:54
+  shift_end: 2021-04-03 19:32:54
+  shift_pay: 1
+  organization_id: 1
+
+two:
+  shift_open: false
+  shift_role: MyString
+  shift_description: MyString
+  shift_start: 2021-04-03 19:32:54
+  shift_end: 2021-04-03 19:32:54
+  shift_pay: 1
+  organization_id: 1
