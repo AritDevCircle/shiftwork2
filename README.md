@@ -53,7 +53,8 @@ We are currently running Cycle 2 from March 8th through May 28th 2021 (12 weeks)
 2. Fork this project to your GitHub Account.
 3. Clone your forked project to your local machine.
 4. Make sure Postgres is running.
-5. On Terminal (or other CLI), run the commands `rails db:setup` and `rails db:migrate` to create and configure databases.
+5. Edit `config/database.yml` with your Postgres username and password (never fear: this file will not be committed to the repo).
+5. On Terminal (or other CLI), run the commands `rails db:setup` and `rails db:migrate` to create & configure databases.
 6. Run the command `bundle install` to install all gems.
 7. Run the command `rails server` to run the app locally on port 3000.
 8. In your browser, navigate to `localhost:3000`. You should see the application running.
