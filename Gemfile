@@ -26,6 +26,8 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
+gem 'bootstrap-datepicker-rails'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

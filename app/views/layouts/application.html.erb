@@ -3,10 +3,9 @@
   <head>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <title>Shiftwork App</title>
   </head>
@@ -17,8 +16,9 @@
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
+
       <%= yield %>
+
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   </body>
 </html>

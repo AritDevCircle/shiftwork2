@@ -7,6 +7,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require('jquery')
 //= require jquery
 //= require jquery_ujs
 
@@ -16,14 +17,3 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-document.addEventListener('DOMContentLoaded', function() {
-  flatpickr('.flatpickr-field',{
-    enableTime:      true,
-    altInput:        true,
-    minDate:         "today",
-    altFormat:       "F j, Y at h:i K",
-    dateFormat:      "Y-m-d H:i:s",
-    minuteIncrement: 1,
-  });
-})
