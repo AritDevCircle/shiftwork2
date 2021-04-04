@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # match '*unmatched', to: 'application#render_not_found', via: :all
 
-  root 'users#welcome'
+  root 'users#index'
 
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
