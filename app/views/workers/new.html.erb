@@ -1,0 +1,22 @@
+<h1>Create Worker Account</h1>
+
+<div>
+  <div>
+    <%= form_with(model: @worker, local: true) do |f| %>
+
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+
+      <%= f.label :worker_city %>
+      <%= f.text_field :worker_city %>
+
+      <%= f.label :worker_state %>
+      <%= f.text_field :worker_state %>
+
+      <%= f.submit "Create Worker Account" %>
+    <% end %>
+  </div>
+</div>

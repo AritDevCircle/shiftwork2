@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user_orgs = Organization.where(user_id: @user.id).order("org_name ASC")
+    @user_org = Organization.where(user_id: @user.id).first
   end
 
   def new

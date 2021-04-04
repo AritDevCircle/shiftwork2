@@ -7,45 +7,41 @@
 
   <% if @user.user_type == "organization" %>
     <div>
-      <h3>Your Organization</h3>
-
       <% if @user.has_org? %>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Address</th>
-              <th>City</th>
-              <th>State</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
+        <h3>Your Organization</h3>
 
-          <tbody>
-            <% @user_orgs.each do |org| %>
-              <tr>
-                <td><%= org.org_name %></td>
-                <td><%= org.org_description %></td>
-                <td><%= org.org_address %></td>
-                <td><%= org.org_city %></td>
-                <td><%= org.org_state %></td>
-                <td><%= link_to 'View Shifts', organization_path(org.id) %></td>
-                <td><%= link_to 'Edit Org', edit_organization_path(org.id) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <div>
+          <p><%= @user_org.org_name %></p>
+          <p><%= @user_org.org_description %></p>
+          <p><%= @user_org.org_address %></p>
+          <p><%= @user_org.org_city %></p>
+          <p><%= @user_org.org_state %></p>
+          <p><%= link_to 'View Your Shifts', organization_path(@user_org.id) %></p>
+          <p><%= link_to 'Edit Org', edit_organization_path(@user_org.id) %></p>
+        </div>
       <% else %>
+        <p>You need to create an Organization</p>
         <p><%= link_to 'Create Organization', new_organization_path %></p>
       <% end %>
     </div>
   <% else %>
     <div>
-      <h3>Your Details</h3>
+      <% if @user.worker? %>
+        <h3>Your Worker Account Details</h3>
+
+        <div>
+          <p><%= @user.worker_account.first_name %></p>
+          <p><%= @user.worker_account.last_name %></p>
+          <p><%= @user.worker_account.worker_city %></p>
+          <p><%= @user.worker_account.worker_state %></p>
+          <p><%= link_to 'View Your Assigned Shifts', worker_path(@user.worker_account.id) %></p>
+          <p><%= link_to 'View All Shifts', shifts_path %></p>
+          <p><%= link_to 'Edit Worker Account', edit_worker_path(@user.worker_account.id) %></p>
+        </div>
+      <% else %>
+        <p>You need to create a Worker Account</p>
+        <p><%= link_to 'Create Worker Account', new_worker_path %></p>
+      <% end %>
     </div>
   <% end %>
-
-  
 </div>

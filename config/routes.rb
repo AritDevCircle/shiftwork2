@@ -9,5 +9,11 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[new create show update edit]
   resources :organizations, only: %i[new create show edit update]
-  resources :shifts
+  resources :shifts do
+    member do
+      patch :take, :drop
+      put :take, :drop
+    end
+  end
+  resources :workers
 end

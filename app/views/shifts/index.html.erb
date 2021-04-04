@@ -1,30 +1,36 @@
-<p>
-  The local Date and Time is <strong><%= Time.now.strftime("%B %d %Y, %I:%M %p") %></strong> <em>(Timezone: <%= Time.now.zone %>)</em>.
-</p>
-
-<h3>All Open Shifts!</h3>
+<h3>List of All Shifts</h3>
 
 <table>
   <thead>
     <tr>
       <th>Organization Name</th>
+      <th>Shift Status</th>
       <th>Role</th>
       <th>Description</th>
       <th>Shift Starts</th>
       <th>Shift Ends</th>
       <th>Pay Rate</th>
+      <% if current_user.worker? %>
+      <th></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% @open_shifts.each do |shift| %>
+    <% @shifts.each do |shift| %>
       <tr>
         <td><%= shift.shift_org_name %></td>
+        <td><% if shift.shift_open %>OPEN<% else %>Filled<% end %></td>
         <td><%= shift.shift_role %></td>
         <td><%= shift.shift_description %></td>
         <td><%= shift.shift_start.httpdate %></td>
         <td><%= shift.shift_end.httpdate %></td>
         <td><%= shift.shift_pay %></td>
+        <% if current_user.worker? && shift.shift_open %>
+          <th>
+          <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' } %>
+          </th>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

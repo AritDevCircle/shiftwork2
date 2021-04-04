@@ -8,9 +8,16 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
   validates :user_type, presence: true, inclusion: { in: %w(organization worker) }
 
-  has_one :organization
-
+  # TO-DO: refactor like worker?
   def has_org?
     Organization.where(user_id: self.id).count == 1
+  end
+
+  def worker?
+    Worker.where(user_id: self.id).exists?
+  end
+
+  def worker_account
+    return Worker.where(user_id: self.id).first
   end
 end
