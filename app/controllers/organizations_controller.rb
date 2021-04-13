@@ -31,7 +31,7 @@ class OrganizationsController < ApplicationController
   def update
     if @organization.update(organization_params)
       flash[:success] = "Organization updated successfully!"
-      redirect_to @organization
+      redirect_to user_path
     else
       flash[:danger] = "Something went wrong."
       render :edit, status: :unprocessable_entity
