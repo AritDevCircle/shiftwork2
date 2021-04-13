@@ -10,11 +10,7 @@
             <%= f.label :org_name, :class => "col-12 col-md-4 col-lg-2" %>
             <%= f.text_field :org_name, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
         </div>
-        
-        <div class="row organizations-field">
-            <%= f.label :org_description, :class => "col-12 col-md-4 col-lg-2" %>
-            <%= f.text_area :org_description, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
-        </div>
+
         
         <div class="row organizations-field">
             <%= f.label :org_address, :class => "col-12 col-md-4 col-lg-2" %>
@@ -30,6 +26,12 @@
             <%= f.label :org_state, :class => "col-12 col-md-4 col-lg-2" %>
             <%= f.text_field :org_state, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
         </div>
+
+        <div class="row organizations-field">
+            <%= f.label :org_description, :class => "col-12 col-md-4 col-lg-2" %>
+            <%= f.text_area :org_description, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+        </div>
+
         <div class="row organizations-field">
             <%= f.submit "Update Organization", :class => "col-6 col-lg-4 mx-auto" %>
         <% end %>
