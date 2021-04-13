@@ -1,3 +1,21 @@
 // Place all the styles related to the Organizations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+$form-padding: 40px;
+$form-margin: 20px 0;
+$field-padding: 10px 0;
+
+
+.organizations-form {
+    border: 1px solid black;
+    padding: $form-padding;
+    margin: $form-margin;
+}
+
+.organizations-field {
+    padding: $field-padding ;
+
+    &:last-child {
+        padding-top: 40px;
+    }
+}
