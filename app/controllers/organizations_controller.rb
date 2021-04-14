@@ -2,6 +2,8 @@ class OrganizationsController < ApplicationController
   before_action :logged_in_user, only: %i[show new create edit update]
   before_action :set_organization, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  attr_accessor :form_labels, :form_text_fields, :form_submit_button
+  
   
   def index
   end
@@ -26,6 +28,9 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
+    @form_label = "col-12 col-md-4 col-lg-2"
+    @form_text_fields = "col-12 col-md-8 col-lg-10 mx-auto"
+    @form_submit_button = "col-6 col-lg-4 mx-auto"
   end
 
   def update
