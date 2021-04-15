@@ -1,37 +1,39 @@
 <div class="container">
 
-    <h1 class="text-center">Edit Organization</h1>
+
 
     <div>
-        <div class="organizations-form">
+        <div class="organizations-form px-5 py-3 border">
             <%= form_with(model: @organization, local: true) do |f| %>
-                <div class="row organizations-field">
+                <h1 class="text-center pb-3">Edit Organization</h1>
+
+                <div class="row organizations-field py-2">
                     <%= f.label :org_name, :class => @form_label %>
                     <%= f.text_field :org_name, :class => @form_text_fields %>
                 </div>
 
                 
-                <div class="row organizations-field">
+                <div class="row organizations-field py-2">
                     <%= f.label :org_address, :class => @form_label %>
                     <%= f.text_field :org_address, :class => @form_text_fields %>
                 </div>
                 
-                <div class="row organizations-field">
+                <div class="row organizations-field py-2">
                     <%= f.label :org_city, :class => @form_label %>
                     <%= f.text_field :org_city, :class => @form_text_fields %>
                 </div>
                 
-                <div class="row organizations-field">
+                <div class="row organizations-field py-2">
                     <%= f.label :org_state, :class => @form_label %>
                     <%= f.text_field :org_state, :class => @form_text_fields %>
                 </div>
 
-                <div class="row organizations-field">
+                <div class="row organizations-field py-2">
                     <%= f.label :org_description, :class => @form_label %>
                     <%= f.text_area :org_description, :class => @form_text_fields %>
                 </div>
 
-                <div class="row organizations-field">
+                <div class="row organizations-field py-3">
                     <%= f.submit "Update Organization", :class => @form_submit_button %>
                 </div> 
             <% end %>    
