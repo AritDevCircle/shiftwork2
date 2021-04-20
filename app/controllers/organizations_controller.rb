@@ -28,9 +28,6 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
-    @form_label = "col-12 col-md-4 col-lg-2"
-    @form_text_fields = "col-12 col-md-8 col-lg-10 mx-auto"
-    @form_submit_button = "col-6 col-lg-4 mx-auto"
   end
 
   def update
