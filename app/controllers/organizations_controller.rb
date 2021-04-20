@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :logged_in_user, only: %i[show new create edit update]
   before_action :set_organization, only: %i[show edit update]
-  before_action :is_owner, only: %i[show new create edit update]
+  before_action :is_owner, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   
   def index
@@ -27,6 +27,10 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
+    unless is_owner
+        flash[:danger] = "User cannot edit this organization."
+        redirect_to @organization
+    end
   end
 
   def update
