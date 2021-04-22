@@ -4,7 +4,11 @@ class ShiftsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def index
-    @shifts = Shift.all.order("updated_at DESC")
+    if current_user.has_org?
+      @shifts = Shift.where(organization_id: current_org_id).order("updated_at DESC") 
+    else
+      @shifts = Shift.all.order("updated_at DESC")
+    end
   end
 
   def show

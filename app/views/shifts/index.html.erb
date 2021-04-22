@@ -1,5 +1,7 @@
 <h3>List of All Shifts</h3>
-
+<% if current_user.has_org? %>
+  <p><%= link_to 'Create Shift', new_shift_path %></p>
+<% end %>
 <table>
   <thead>
     <tr>
@@ -29,6 +31,12 @@
         <% if current_user.worker? && shift.shift_open %>
           <th>
           <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' } %>
+          </th>
+        <% end %>
+        <% if current_user.has_org? %>
+          <th>
+            <%= link_to 'Edit', edit_shift_path(shift.id) %>
+            <%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' } %>
           </th>
         <% end %>
       </tr>
