@@ -1,7 +1,7 @@
 <section class="shifts-list m-4">
 <h2>List of Shifts</h2>
 <% if current_user.has_org? %>
-  <p><%= link_to 'Create Shift', new_shift_path %></p>
+  <p><%= link_to 'Create Shift', new_shift_path, class: "btn btn-primary" %></p>
 <% end %>
 
 
@@ -36,13 +36,13 @@
       </div>
       <% if current_user.has_org? %>
         <div class="text-right">
-          <span class="m-1"><%= link_to 'Edit', edit_shift_path(shift.id) %></span>
-          <span class="m-1"><%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' } %></span>
+          <span class="m-1"><%= link_to 'Edit', edit_shift_path(shift.id), class: "btn btn-primary" %></span>
+          <span class="m-1"><%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %></span>
         </div>
       <% end %>
       <% if current_user.worker? && shift.shift_open %>
         <div class="text-right">
-          <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' } %>
+          <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' }, class: "btn btn-primary" %>
         </div>
       <% end %>
       </div>
