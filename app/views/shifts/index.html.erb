@@ -9,24 +9,24 @@
   <% @shifts.each do |shift| %>
     <div class="shift col-12 col-lg-6 col-xl-4 pl-0 my-2">
       <div class="border bg-light p-4">
-      <h3 class="text-info mb-3"><%= shift.shift_role %></h3>
-      <div class="row">
+      <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
+      <div class="row mb-3">
         <div class="col-4 font-weight-bold">Organization Name</div>
         <div class="col-8"><%= shift.shift_org_name %></div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Starts</div>
         <div class="col-8"><%= shift.shift_start.httpdate %></div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Ends</div>
         <div class="col-8"><%= shift.shift_end.httpdate %></div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-4 font-weight-bold">Pay Rate</div>
         <div class="col-8"><%= shift.shift_pay %></div>
       </div>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Description</div>
         <div class="col-8"><%= shift.shift_description %></div>
       </div>
