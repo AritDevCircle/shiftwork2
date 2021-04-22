@@ -1,22 +1,34 @@
-<h1>Edit Worker Account</h1>
+<div class="container">
 
-<div>
+
   <div>
-    <%= form_with(model: @worker, local: true) do |f| %>
+    <div class="workers-form px-5 py-3 border">
+          <%= form_with(model: @worker, local: true) do |f| %>
+            <h1 class="text-center pb-3">Edit Workers Account</h1>
 
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name %>
+      <div class="row workers-field py-2">
+        <%= f.label :first_name, :class => "col-12 col-md-4 col-lg-2" %>
+      <%= f.text_field :first_name, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+   </div>
 
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
+     <div class="row workers-field py-2">
+      <%= f.label :last_name, :class => "col-12 col-md-4 col-lg-2" %>
+      <%= f.text_field :last_name, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+   </div>
 
-      <%= f.label :worker_city %>
-      <%= f.text_field :worker_city %>
+      <div class="row workers-field py-2">
+      <%= f.label :worker_city, :class => "col-12 col-md-4 col-lg-2" %>
+      <%= f.text_field :worker_city, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+   </div>
 
-      <%= f.label :worker_state %>
-      <%= f.text_field :worker_state %>
+      <div class="row workers-field py-2">
+      <%= f.label :worker_state, :class => "col-12 col-md-4 col-lg-2" %>
+      <%= f.text_field :worker_state, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+   </div> 
 
-      <%= f.submit "Update Worker Account" %>
+      <div class="row organizations-field py-3">
+      <%= f.submit "Update Worker Account", :class => "col-6 col-lg-4 mx-auto" %>
+         </div>  
     <% end %>
   </div>
 </div>
