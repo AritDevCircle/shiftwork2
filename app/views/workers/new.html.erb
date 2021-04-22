@@ -8,22 +8,27 @@
             
      <div class="row workers-field py-2">
           <%= f.label :first_name, :class => "col-12 col-md-4 col-lg-2" %>
-      <%= f.text_field :first_name, :class => "col-12 col-md-8 col-lg-10 mx-auto"  %>
+      <%= f.text_field :first_name, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+       </div>
 
       <div class="row workers-field py-2">
           <%= f.label :last_name, :class => "col-12 col-md-4 col-lg-2" %>
       <%= f.text_field :last_name, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+         </div>
 
      <div class="row workers-field py-2">
           <%= f.label :worker_city, :class => "col-12 col-md-4 col-lg-2" %>
       <%= f.text_field :worker_city, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+         </div>
 
       <div class="row workers-field py-2">
          <%= f.label :worker_state, :class => "col-12 col-md-4 col-lg-2" %>
       <%= f.text_field :worker_state, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+         </div>
 
       <div class="row workers-field py-2">
         <%= f.submit "Create Worker Account", :class => "col-6 col-lg-4 col-auto mx-auto btn btn-primary" %>
+         </div>  
     <% end %>
   </div>
 </div>
