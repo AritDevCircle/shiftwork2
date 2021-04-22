@@ -2,6 +2,8 @@ class OrganizationsController < ApplicationController
   before_action :logged_in_user, only: %i[show new create edit update]
   before_action :set_organization, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  attr_accessor :form_labels, :form_text_fields, :form_submit_button
+  
   
   def index
   end
@@ -31,7 +33,7 @@ class OrganizationsController < ApplicationController
   def update
     if @organization.update(organization_params)
       flash[:success] = "Organization updated successfully!"
-      redirect_to @organization
+      redirect_to user_path
     else
       flash[:danger] = "Something went wrong."
       render :edit, status: :unprocessable_entity

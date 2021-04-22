@@ -1,25 +1,42 @@
-<h1>Edit Organization</h1>
+<div class="container">
 
-<div>
-  <div>
-    <%= form_with(model: @organization, local: true) do |f| %>
 
-      <%= f.label :org_name %>
-      <%= f.text_field :org_name %>
 
-      <%= f.label :org_description %>
-      <%= f.text_field :org_description %>
+    <div>
+        <div class="organizations-form px-5 py-3 border">
+            <%= form_with(model: @organization, local: true) do |f| %>
+                <h1 class="text-center pb-3">Edit Organization</h1>
 
-      <%= f.label :org_address %>
-      <%= f.text_field :org_address %>
+                <div class="row organizations-field py-2">
+                    <%= f.label :org_name, :class => "col-12 col-md-4 col-lg-2" %>
+                    <%= f.text_field :org_name, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+                </div>
 
-      <%= f.label :org_city %>
-      <%= f.text_field :org_city %>
+                
+                <div class="row organizations-field py-2">
+                    <%= f.label :org_address, :class => "col-12 col-md-4 col-lg-2" %>
+                    <%= f.text_field :org_address, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+                </div>
+                
+                <div class="row organizations-field py-2">
+                    <%= f.label :org_city, :class => "col-12 col-md-4 col-lg-2" %>
+                    <%= f.text_field :org_city, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+                </div>
+                
+                <div class="row organizations-field py-2">
+                    <%= f.label :org_state, :class => "col-12 col-md-4 col-lg-2" %>
+                    <%= f.text_field :org_state, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+                </div>
 
-      <%= f.label :org_state %>
-      <%= f.text_field :org_state %>
+                <div class="row organizations-field py-2">
+                    <%= f.label :org_description, :class => "col-12 col-md-4 col-lg-2" %>
+                    <%= f.text_area :org_description, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+                </div>
 
-      <%= f.submit "Update Organization" %>
-    <% end %>
-  </div>
+                <div class="row organizations-field py-3">
+                    <%= f.submit "Update Organization", :class => "col-6 col-lg-4 mx-auto" %>
+                </div> 
+            <% end %>    
+        </div>
+    </div>
 </div>
