@@ -1,7 +1,7 @@
-<div>
+<div class="container">
   <h3>Your Shifts</h3>
 
-  <p><%= link_to 'Create Shift', new_shift_path %></p>
+   <% if @is_owner %><p><%= link_to "Create Shift", new_shift_path %></p><% end %>
 
   <table>
     <thead>
@@ -26,8 +26,10 @@
           <td><%= shift.shift_end.httpdate %></td>
           <td><%= shift.shift_pay %></td>
           <td>
-            <%= link_to 'Edit', edit_shift_path(shift.id) %>
-            <%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% if @is_owner %>
+            <%= link_to "Edit", edit_shift_path(shift.id) %>
+            <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
           </td>
         </tr>
       <% end %>

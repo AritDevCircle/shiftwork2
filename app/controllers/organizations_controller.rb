@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :logged_in_user, only: %i[show new create edit update]
   before_action :set_organization, only: %i[show edit update]
+  before_action :is_owner, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   attr_accessor :form_labels, :form_text_fields, :form_submit_button
   
@@ -28,6 +29,10 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
+    unless is_owner
+        flash[:danger] = "User cannot edit this organization."
+        redirect_to @organization
+    end
   end
 
   def update
@@ -49,5 +54,11 @@ class OrganizationsController < ApplicationController
 
   def organization_params
     params.require(:organization).permit(:org_name, :org_description, :org_address, :org_city, :org_state, :user_id)
+  end
+
+  def is_owner
+    if @organization.user_id == session[:user_id]
+        @is_owner = true
+    end
   end
 end
