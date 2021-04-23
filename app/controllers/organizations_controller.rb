@@ -30,7 +30,7 @@ class OrganizationsController < ApplicationController
 
   def edit
     unless is_owner
-        flash[:danger] = "User cannot edit this organization."
+        flash[:danger] = "You are unauthorized to edit this organization."
         redirect_to @organization
     end
   end
