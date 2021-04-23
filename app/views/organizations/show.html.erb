@@ -1,12 +1,12 @@
-<div class="container-fluid bg-light p-5">
+<div class="container-fluid p-5">
   <h3>Your Shifts</h3>
 
    <% if @is_owner %><p><%= link_to "Create Shift", new_shift_path, class: "btn btn-primary" %></p><% end %>
 
-    <div class="row container-fluid px-0 mx-0">
+    <div class="row container-fluid mr-0">
         <% @org_shifts.each do |shift| %>
-            <div class="shift col-12 col-lg-6 col-xl-4 bg-light my-2">
-                <div class="border p-4">
+            <div class="shift col-12 col-lg-6 col-xl-4 my-2 pl-0">
+                <div class="border bg-light p-4">
                     <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Starts</div>
