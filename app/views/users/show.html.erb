@@ -1,46 +1,79 @@
-<div>
+<div class="container">
   <div>
     <p>
-      Your Email: <%= @user.email %> | Your User Type: <%= @user.user_type %>
+      <b>Your Email:</b> <%= @user.email %> | <b>Your User Type:</b> <%= @user.user_type %>
     </p>
   </div>
 
   <% if @user.user_type == "organization" %>
-    <div>
+    <div class="card m-auto">
       <% if @user.has_org? %>
-        <h3>Your Organization</h3>
-
-        <div>
-          <p><%= @user_org.org_name %></p>
-          <p><%= @user_org.org_description %></p>
-          <p><%= @user_org.org_address %></p>
-          <p><%= @user_org.org_city %></p>
-          <p><%= @user_org.org_state %></p>
-          <p><%= link_to 'View Your Shifts', organization_path(@user_org.id) %></p>
-          <p><%= link_to 'Edit Org', edit_organization_path(@user_org.id) %></p>
+      
+        <h3 class="card-header">Your Organization</h3>
+        <div class="card-block">
+            <div class="row">
+                <div class="col-4">
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Name </b> </li>
+                <li class="list-group-item"><b>Address </b></li>
+                <li class="list-group-item"><b>City </b></li>
+                <li class="list-group-item"><b>State </b></li>
+                <li class="list-group-item"><b>Description </b></li>
+                </ul>   
+                </div>
+                <div class="col-8">
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item"><%= @user_org.org_name %></li>
+                <li class="list-group-item"><%= @user_org.org_address %></li>
+                <li class="list-group-item"><%= @user_org.org_city %></li>
+                <li class="list-group-item"><%= @user_org.org_state %></li>
+                <li class="list-group-item"><%= @user_org.org_description %></li>
+                </ul>
+                </div>
+            </div>
         </div>
+        <div class="card-footer">
+        <p class="btn"><%= link_to 'View Your Shifts', organization_path(@user_org.id) %></p>
+        <p class="btn"><%= link_to 'Edit Org', edit_organization_path(@user_org.id) %></p>
+        </div>
+    </div>
       <% else %>
         <p>You need to create an Organization</p>
         <p><%= link_to 'Create Organization', new_organization_path %></p>
       <% end %>
     </div>
   <% else %>
-    <div>
+    <div class="card m-auto">
       <% if @user.worker? %>
-        <h3>Your Worker Account Details</h3>
+        <h3 class="card-header">Your Worker Account Details</h3>
 
-        <div>
-          <p><%= @user.worker_account.first_name %></p>
-          <p><%= @user.worker_account.last_name %></p>
-          <p><%= @user.worker_account.worker_city %></p>
-          <p><%= @user.worker_account.worker_state %></p>
-          <p><%= link_to 'View Your Assigned Shifts', worker_path(@user.worker_account.id) %></p>
-          <p><%= link_to 'View All Shifts', shifts_path %></p>
-          <p><%= link_to 'Edit Worker Account', edit_worker_path(@user.worker_account.id) %></p>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-4">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>First Name</b> </li>
+            <li class="list-group-item"><b>Last Name </b></li>
+            <li class="list-group-item"><b>City</b></li>
+            <li class="list-group-item"><b>State </b></li>
+            </div>
+            <div class="col-8">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><%= @user.worker_account.first_name %></li>
+                <li class="list-group-item"><%= @user.worker_account.last_name %></li>
+                <li class="list-group-item"><%= @user.worker_account.worker_city %></li>
+                <li class="list-group-item"><%= @user.worker_account.worker_state %></li>
+                </ul>
+            </div>
+          </div>
+          <div class="card-footer">
+          <p class="btn"><%= link_to 'View Your Assigned Shifts', worker_path(@user.worker_account.id) %></p>
+          <p class="btn"><%= link_to 'View All Shifts', shifts_path %></p>
+          <p class="btn"><%= link_to 'Edit Worker Account', edit_worker_path(@user.worker_account.id) %></p>
+          </div>
         </div>
       <% else %>
         <p>You need to create a Worker Account</p>
-        <p><%= link_to 'Create Worker Account', new_worker_path %></p>
+        <p class="btn"><%= link_to 'Create Worker Account', new_worker_path %></p>
       <% end %>
     </div>
   <% end %>
