@@ -1,30 +1,39 @@
-<h1>Create Shift</h1>
+<div class="container bg-light p-5">
+    <h1>Create Shift</h1>
+    <div class="pt-4">
+        <%= form_with(model: @shift, local: true) do |f| %>
+          <div class="form-group row mr-0">
+              <%= f.label :shift_role, class: "col-form-label col-12 col-sm-3 col-lg-2" %>
+              <%= f.text_field :shift_role, class: "form-control col-12 col-sm-9 col-lg-8" %>
+          </div>
 
-<div>
-  <div>
-    <%= form_with(model: @shift, local: true) do |f| %>
+          <div class="form-group row mr-0">
+              <%= f.label :shift_description, class: "col-form-label col-12 col-sm-3 col-lg-2" %>
+              <%= f.text_area :shift_description, class: "form-control col-12 col-sm-9 col-lg-8" %>
+          </div>
 
-      <%= f.label :shift_open, 'Shift Status' %>
-      <%= f.select(:shift_open, options_for_select([['Open', true], ['Filled', false]], { selected: @shift.shift_open }), prompt: "Select") %>
+          <div class="form-group row mr-0">
+              <%= f.label :shift_start, class: "col-form-label col-12 col-sm-3 col-lg-2" %>
+              <%= f.text_field :shift_start, class: "datepicker-js-field inline form-control col-12 col-sm-5 col-lg-2" %>
+          </div>
 
-      <%= f.label :shift_role %>
-      <%= f.text_field :shift_role %>
+          <div class="form-group row mr-0">
+              <%= f.label :shift_end, class: "col-form-label col-12 col-sm-3 col-lg-2" %>
+              <%= f.text_field :shift_end, class: "form-control datepicker-js-field inline col-12 col-sm-5 col-lg-2" %>
+          </div>
 
-      <%= f.label :shift_description %>
-      <%= f.text_field :shift_description %>
+          <div class="form-group row mr-0">
+              <%= f.label :shift_pay, "Shift Pay (US$)" , class: "col-form-label col-12 col-sm-3 col-lg-2" %>
+              <%= f.number_field :shift_pay, class: "form-control col-12 col-sm-5 col-lg-2" %>
+          </div>
+          <div class="form-group row mr-0">
+            <%= f.label :shift_open, 'Shift Status', class: "col-form-label col-12 col-sm-3 col-lg-2"  %>
+            <%= f.select(:shift_open, options_for_select([['Open', true], ['Filled', false]], { selected: @shift.shift_open }), {prompt: "Select"}, {class: "form-control col-12 col-sm-5 col-lg-2"}) %>
+          </div>
 
-      <%= f.label :shift_start %>
-      <%#= f.datetime_select :shift_start %>
-      <%= f.text_field :shift_start, class: 'datepicker-js-field inline' %>
-
-      <%= f.label :shift_end %>
-      <%#= f.datetime_select :shift_end %>
-      <%= f.text_field :shift_end, class: 'datepicker-js-field inline' %>
-
-      <%= f.label :shift_pay %>
-      <%= f.number_field :shift_pay %>
-
-      <%= f.submit "Create Shift" %>
-    <% end %>
-  </div>
+            <div class="form-group text-right">
+                <%= f.submit "Create Shift", class: "btn btn-primary" %>
+            </div>
+        <% end %>
+    </div>
 </div>
