@@ -5,35 +5,38 @@
 
     <div class="row container-fluid px-0 mx-0">
         <% @org_shifts.each do |shift| %>
-            <div class="shift col-12 col-lg-6 col-xl-4 border bg-light my-2 mx-0 p-4">
-                <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold">Shift Starts</div>
-                    <div class="col-8"><%= shift.shift_start.httpdate %></div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold">Shift Ends</div>
-                    <div class="col-8"><%= shift.shift_end.httpdate %></div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold">Pay Rate</div>
-                    <div class="col-8"><%= shift.shift_pay %></div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold">Description</div>
-                    <div class="col-8"><%= shift.shift_description %></div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold">Shift Status</div>
-                    <div class="col-8"><% if shift.shift_open %>Open<% else %>Filled<% end %></div>
-                </div>
-                <% if @is_owner %>
-                    <div class="text-right">
-                        <%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %>
-                        <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
+            <div class="shift col-12 col-lg-6 col-xl-4 bg-light my-2">
+                <div class="border p-4">
+                    <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Shift Starts</div>
+                        <div class="col-7"><%= shift.shift_start.httpdate %></div>
                     </div>
-                <% end %>
-        </div>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Shift Ends</div>
+                        <div class="col-7"><%= shift.shift_end.httpdate %></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Pay Rate</div>
+                        <div class="col-7"><%= shift.shift_pay %></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Description</div>
+                        <div class="col-7"><%= shift.shift_description %></div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Shift Status</div>
+                        <div class="col-7"><% if shift.shift_open %>Open<% else %>Filled<% end %></div>
+                    </div>
+                    <% if @is_owner %>
+                        <div class="text-right">
+                            <%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %>
+                            <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+
         <% end %>
     </div>
   
