@@ -7,7 +7,7 @@ class WorkersController < ApplicationController
   end
 
   def show
-    @worker_shifts = Shift.where(worker_id: current_user.id)
+    @worker_shifts = Shift.where(worker_id: current_user.id).order("updated_at DESC")
   end
 
   def new
