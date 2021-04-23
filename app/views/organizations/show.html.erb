@@ -28,6 +28,10 @@
                         <div class="col-5 font-weight-bold">Shift Status</div>
                         <div class="col-7"><% if shift.shift_open %>Open<% else %>Filled<% end %></div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Shift Worker</div>
+                        <div class="col-7"></div>
+                    </div>
                     <% if @is_owner %>
                         <div class="text-right">
                             <%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %>
