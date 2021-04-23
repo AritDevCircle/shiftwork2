@@ -47,7 +47,7 @@
       <% end %>
       <% if !shift.shift_open && shift.worker_id == current_user.id %>
         <div class="text-right">
-          <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?' }, class: "btn btn-primary" %>
+          <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?' }, class: "btn btn-danger" %>
         </div>
       <% end %>
       </div>
