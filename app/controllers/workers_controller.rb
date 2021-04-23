@@ -2,7 +2,7 @@ class WorkersController < ApplicationController
   before_action :logged_in_user, only: %i[index show new create edit update]
   before_action :set_worker, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-
+  
   def index
   end
 
