@@ -1,7 +1,7 @@
 class Shift < ApplicationRecord
   belongs_to :organization
 
-  validates :shift_open, presence: true
+  validates_inclusion_of :shift_open, in: [true, false]
   validates :shift_role, presence: true
   validates :shift_description, presence: true, length: { minimum: 10 }
   validates :shift_start, presence: true

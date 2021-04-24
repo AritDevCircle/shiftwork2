@@ -18,6 +18,6 @@ class User < ApplicationRecord
   end
 
   def worker_account
-    return Worker.where(user_id: self.id).first
+    return Worker.where(user_id: self.id).first if self.worker?
   end
 end
