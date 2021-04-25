@@ -9,7 +9,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    if is_owner
+      @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    else 
+      redirect_to action: "show", id: @organization.user_id
+    end
   end
 
   def new
@@ -48,6 +52,7 @@ class OrganizationsController < ApplicationController
 
   def set_organization
     @organization = Organization.find(params[:id])
+    Rails.logger.debug("My object: #{@organization}")
     raise ActiveRecord::RecordNotFound unless @organization
   end
 
