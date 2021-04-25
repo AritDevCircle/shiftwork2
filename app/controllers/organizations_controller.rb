@@ -52,7 +52,6 @@ class OrganizationsController < ApplicationController
 
   def set_organization
     @organization = Organization.find(params[:id])
-    Rails.logger.debug("My object: #{@organization}")
     raise ActiveRecord::RecordNotFound unless @organization
   end
 
