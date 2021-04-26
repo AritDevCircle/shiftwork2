@@ -1,37 +1,35 @@
-<div class="container">
+<div class="container bg-light p-5">
+    <h1>Create Organization</h1>
 
     <div>
-    <div class="organizations-form px-5 py-3 border">
         <%= form_with(model: @organization, local: true) do |f| %>
-            <h1 class="text-center pb-3">Create Organization</h1>
-            
-            <div class="row organizations-field py-2">
-                <%= f.label :org_name, class: "col-12 col-md-4 col-lg-2" %>
-                <%= f.text_field :org_name, class: "col-12 col-md-8 col-lg-10 mx-auto" %>
+            <div class="form-group">
+                <%= f.label :org_name, class: "col-form-label" %>
+                <%= f.text_field :org_name, class: "form-control" %>
             </div>
 
-            <div class="row organizations-field py-2">
-                <%= f.label :org_address, class: "col-12 col-md-4 col-lg-2" %>
-                <%= f.text_field :org_address, class: "col-12 col-md-8 col-lg-10 mx-auto" %>
+            <div class="form-group">
+                <%= f.label :org_address, class: "col-form-label" %>
+                <%= f.text_field :org_address, class: "form-control" %>
             </div>
 
-            <div class="row organizations-field py-2">
-                <%= f.label :org_city, class: "col-12 col-md-4 col-lg-2" %>
-                <%= f.text_field :org_city, class: "col-12 col-md-8 col-lg-10 mx-auto" %>
+            <div class="form-group">
+                <%= f.label :org_city, class: "col-form-label" %>
+                <%= f.text_field :org_city, class: "form-control" %>
             </div>
 
-            <div class="row organizations-field py-2">
-                <%= f.label :org_state, class: "col-12 col-md-4 col-lg-2" %>
-                <%= f.text_field :org_state, class: "col-12 col-md-8 col-lg-10 mx-auto" %>
+            <div class="form-group">
+                <%= f.label :org_state, class: "col-form-label" %>
+                <%= f.text_field :org_state, class: "form-control" %>
             </div>
 
-            <div class="row organizations-field py-2">
-                <%= f.label :org_description, class: "col-12 col-md-4 col-lg-2" %>
-                <%= f.text_area :org_description, class: "col-12 col-md-8 col-lg-10 mx-auto" %>
+            <div class="form-group">
+                <%= f.label :org_description, class: "col-form-label" %>
+                <%= f.text_area :org_description, class: "form-control" %>
             </div>
 
-            <div class="row organizations-field py-2">
-                <%= f.submit "Create Organization", class: "col-6 col-lg-4 mx-auto" %>
+            <div class="form-group">
+                <%= f.submit "Create Organization", class: "btn btn-primary" %>
             <% end %>
         </div>
     </div>

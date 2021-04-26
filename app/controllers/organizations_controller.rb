@@ -3,7 +3,6 @@ class OrganizationsController < ApplicationController
   before_action :set_organization, only: %i[show edit update]
   before_action :is_owner, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-  attr_accessor :form_labels, :form_text_fields, :form_submit_button
   
   
   def index
@@ -30,7 +29,7 @@ class OrganizationsController < ApplicationController
 
   def edit
     unless is_owner
-        flash[:danger] = "User cannot edit this organization."
+        flash[:danger] = "You are unauthorized to edit this organization."
         redirect_to @organization
     end
   end

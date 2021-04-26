@@ -1,45 +1,57 @@
-<h3>List of All Shifts</h3>
+<section class="shifts-list m-4">
+<h2>List of Shifts</h2>
 <% if current_user.has_org? %>
-  <p><%= link_to 'Create Shift', new_shift_path %></p>
+  <p><%= link_to 'Create Shift', new_shift_path, class: "btn btn-primary" %></p>
 <% end %>
-<table>
-  <thead>
-    <tr>
-      <th>Organization Name</th>
-      <th>Shift Status</th>
-      <th>Role</th>
-      <th>Description</th>
-      <th>Shift Starts</th>
-      <th>Shift Ends</th>
-      <th>Pay Rate</th>
-      <% if current_user.worker? %>
-      <th></th>
-      <% end %>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @shifts.each do |shift| %>
-      <tr>
-        <td><%= shift.shift_org_name %></td>
-        <td><% if shift.shift_open %>OPEN<% else %>Filled<% end %></td>
-        <td><%= shift.shift_role %></td>
-        <td><%= shift.shift_description %></td>
-        <td><%= shift.shift_start.httpdate %></td>
-        <td><%= shift.shift_end.httpdate %></td>
-        <td><%= shift.shift_pay %></td>
-        <% if current_user.worker? && shift.shift_open %>
-          <th>
-          <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' } %>
-          </th>
-        <% end %>
-        <% if current_user.has_org? %>
-          <th>
-            <%= link_to 'Edit', edit_shift_path(shift.id) %>
-            <%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' } %>
-          </th>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+<div class="row ml-0">
+  <% @shifts.each do |shift| %>
+    <div class="shift col-12 col-lg-6 col-xl-4 pl-0 my-2">
+      <div class="border bg-light p-4">
+      <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
+      <div class="row mb-3">
+        <div class="col-4 font-weight-bold">Organization Name</div>
+        <div class="col-8"><%= shift.shift_org_name %></div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-4 font-weight-bold">Shift Starts</div>
+        <div class="col-8"><%= shift.shift_start.httpdate %></div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-4 font-weight-bold">Shift Ends</div>
+        <div class="col-8"><%= shift.shift_end.httpdate %></div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-4 font-weight-bold">Pay Rate</div>
+        <div class="col-8"><%= shift.shift_pay %></div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-4 font-weight-bold">Shift Description</div>
+        <div class="col-8"><%= shift.shift_description %></div>
+      </div>
+      <div class="row">
+        <div class="col-4 font-weight-bold">Shift Status</div>
+        <div class="col-8<% if shift.shift_open %> text-success">OPEN<% else %> text-danger">Filled<% end %></div>
+      </div>
+      <% if current_user.has_org? %>
+        <div class="text-right">
+          <span class="m-1"><%= link_to 'Edit', edit_shift_path(shift.id), class: "btn btn-primary" %></span>
+          <span class="m-1"><%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %></span>
+        </div>
+      <% end %>
+      <% if current_user.worker? && shift.shift_open %>
+        <div class="text-right">
+          <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' }, class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      <% if !shift.shift_open && shift.worker_id == current_user.id %>
+        <div class="text-right">
+          <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?' }, class: "btn btn-danger" %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+</div> 
+</section>
