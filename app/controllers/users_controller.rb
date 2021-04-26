@@ -11,7 +11,12 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if logged_in?
+        flash[:danger] = "You are unauthorized to create new users."
+        return redirect_to root_url
+    else
+        @user = User.new
+    end
   end
 
   def edit
