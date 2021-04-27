@@ -12,7 +12,7 @@ class OrganizationsController < ApplicationController
     if is_owner
       @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
     else 
-      redirect_to action: "show", id: @organization.user_id
+      redirect_to user_path(current_user.id)
     end
   end
 
