@@ -1,7 +1,7 @@
 class ShiftsController < ApplicationController
   before_action :logged_in_user
   before_action :set_shift, only: %i[ show edit update destroy take drop ]
-  before_action :shift_owner, only: %i[ edit ]
+  before_action :shift_owner?, only: %i[ edit ]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def index
@@ -20,9 +20,9 @@ class ShiftsController < ApplicationController
   end
 
   def edit
-    unless shift_owner
+    unless shift_owner?
       flash[:danger] = "You are unauthorized to edit this shift."
-      redirect_to user_path(current_user.id)
+      redirect_to organization_path(current_org_id)
     end
   end
 
@@ -94,9 +94,7 @@ class ShiftsController < ApplicationController
     params.require(:shift).permit(:shift_open, :shift_role, :shift_description, :shift_start, :shift_end, :shift_pay, :organization_id, :worker_id)
   end
 
-  def shift_owner
-    if @shift.organization_id == current_org_id
-        @shift_owner = true
-    end
+  def shift_owner?
+    @shift.organization_id == current_org_id
   end
 end
