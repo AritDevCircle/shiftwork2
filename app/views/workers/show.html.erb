@@ -1,59 +1,78 @@
-<h3 class="font-weight-bold">Page Showing All Your Shifts</h3>
+<div class="container">
+  <% if @worker_shifts %>  
+    <h3 class="font-weight-bold">Page Showing All Your Shifts</h3>
 
-<div class="row container-fluid mr-0">
-      <% @worker_shifts.each do |shift| %>
-  <div class="shift col-12 col-lg-6 col-xl-4 my-2 pl-0">
-                <div class="border bg-light p-4">
-               
-                    <div class="row mb-3">
-                        <div class="col-5 font-weight-bold">Organization Name</div> 
-  <div class="col-7"><%= shift.shift_org_name %></div>
-                    </div>
- 
-                    <div class="row mb-3">
-                        <div class="col-5 font-weight-bold">Shift Status</div>
-  <div class="col-7"><% if shift.shift_open %></div>
-                    </div>
-                     
-                      <div class="row mb-3"> 
-                  <div class="col-5 font-weight-bold">OPEN<% else %>Filled<% end %></div>
-                    </div>
-  
-              <div class="row mb-3">
-                        <div class="col-5 font-weight-bold">Shift Role</div> 
-                    <div class="col-7"><%= shift.shift_role %></div>
-                    </div>
-  
-                      <div class="row mb-3">
-                        <div class="col-5 font-weight-bold">Shift Description</div> 
-                    <div class="col-7"><%= shift.shift_description %></div>
-                    </div>
+    <div class="row container-fluid mr-0">
+          <% @worker_shifts.each do |shift| %>
+      <div class="shift col-12 col-lg-6 col-xl-4 my-2 pl-0">
+                    <div class="border bg-light p-4">
+                  
+                        <div class="row mb-3">
+                            <div class="col-5 font-weight-bold">Organization Name</div> 
+      <div class="col-7"><%= shift.shift_org_name %></div>
+                        </div>
+    
+                        <div class="row mb-3">
+                            <div class="col-5 font-weight-bold">Shift Status</div>
+      <div class="col-7"><% if shift.shift_open %></div>
+                        </div>
                         
-                    <div class="row mb-3">
-                        <div class="col-5 font-weight-bold">Shift Start</div>
-   <div class="col-7"><%= shift.shift_start.httpdate %></div>
-                    </div>
-                    
-                   <div class="row mb-3">
-                <div class="col-5 font-weight-bold">Shift End</div> 
-   <div class="col-7"><%= shift.shift_start.httpdate %></div>
-                    </div>
-  
-                   <div class="row mb-3">
-                   <div class="col-5 font-weight-bold">Shift Pay</div> 
-   <div class="col-7"><%= shift.shift_pay %></div>
-                    </div>
-                    
-  <% if current_user.worker? && Time.current < shift.shift_start %>
-     <div class="text-right">
-      <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?', class: "btn btn-primary" } %>
-   </div>
+                          <div class="row mb-3"> 
+                      <div class="col-5 font-weight-bold">OPEN<% else %>Filled<% end %></div>
+                        </div>
+      
+                  <div class="row mb-3">
+                            <div class="col-5 font-weight-bold">Shift Role</div> 
+                        <div class="col-7"><%= shift.shift_role %></div>
+                        </div>
+      
+                          <div class="row mb-3">
+                            <div class="col-5 font-weight-bold">Shift Description</div> 
+                        <div class="col-7"><%= shift.shift_description %></div>
+                        </div>
+                            
+                        <div class="row mb-3">
+                            <div class="col-5 font-weight-bold">Shift Start</div>
+      <div class="col-7"><%= shift.shift_start.httpdate %></div>
+                        </div>
+                        
+                      <div class="row mb-3">
+                    <div class="col-5 font-weight-bold">Shift End</div> 
+      <div class="col-7"><%= shift.shift_start.httpdate %></div>
+                        </div>
+      
+                      <div class="row mb-3">
+                      <div class="col-5 font-weight-bold">Shift Pay</div> 
+      <div class="col-7"><%= shift.shift_pay %></div>
+                        </div>
+                        
+      <% if current_user.worker? && Time.current < shift.shift_start %>
+        <div class="text-right">
+          <%= link_to "Drop Shift", drop_shift_path(shift), method: :put, data: { confirm: "You are about to DROP this shift. Proceed?", class: "btn btn-primary" } %>
+      </div>
+      <% end %>
+      </div>
+        </div>
+    <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="card m-auto">
+          <h3 class="card-header"><%= @worker.first_name %>  <%= @worker.last_name %></h3>
+
+          <div class="card-block">
+            <div class="row">
+              <div class="col-3">
+              <ul class="list-group list-group-flush">
+              <li class="list-group-item border-white"><b>Bio </b></li>
+              </div>
+              <div class="col-8">
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><%= @worker.bio %></li>
+                  </ul>
+              </div>
+            </div>
+            </div>
+          </div>
   <% end %>
-  </div>
-     </div>
-
-<% end %>
-  </div>
-
-
 </div>
