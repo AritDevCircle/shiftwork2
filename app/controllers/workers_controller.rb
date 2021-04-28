@@ -10,7 +10,7 @@ class WorkersController < ApplicationController
     if current_user.id == @worker.user_id
         @worker_shifts = Shift.where(worker_id: current_user.id).order("updated_at DESC")
     else
-        @worker
+        @worker_bio = Worker.where(id: params[:id]).select(:first_name, :last_name, :bio).first
     end
   end
 
