@@ -9,7 +9,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    if current_user.id == @organization.user_id
+      @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    else 
+      @organization_bio = Organization.where(id: params[:id]).select(:org_name, :org_address, :org_description, :org_city, :org_state).first
+    end
   end
 
   def new
