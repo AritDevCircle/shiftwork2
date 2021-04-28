@@ -27,6 +27,11 @@
          </div>
 
       <div class="row workers-field py-2">
+        <%= f.label :bio, :class => "col-12 col-md-4 col-lg-2" %>
+        <%= f.text_field :bio, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+      </div>
+
+      <div class="row workers-field py-2">
         <%= f.submit "Create Worker Account", :class => "col-6 col-lg-4 col-auto mx-auto btn btn-primary" %>
          </div>  
     <% end %>
