@@ -1,7 +1,7 @@
 class ShiftsController < ApplicationController
   before_action :logged_in_user
   before_action :set_shift, only: %i[ show edit update destroy take drop ]
-  before_action :shift_owner?, only: %i[ edit ]
+  before_action :verify_access, only: %i[ edit update destroy ]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def index
@@ -25,10 +25,6 @@ class ShiftsController < ApplicationController
   end
 
   def edit
-    unless shift_owner?
-      flash[:danger] = "You are unauthorized to edit this shift."
-      redirect_to organization_path(current_org_id)
-    end
   end
 
   def create
@@ -91,15 +87,18 @@ class ShiftsController < ApplicationController
   end
 
   def current_org_id
-    puts "\n\n\nCurrent User ID: #{current_user.id}\n\n\n"
     return Organization.where(user_id: current_user.id).pluck(:id).first
+  end
+
+  # only the organization logged in has access to the shift edit/update/destroy actions
+  def verify_access
+    unless @shift.organization_id == current_org_id
+      flash[:alert] = "You do not have authority to access that."
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def shift_params
     params.require(:shift).permit(:shift_open, :shift_role, :shift_description, :shift_start, :shift_end, :shift_pay, :organization_id, :worker_id)
-  end
-
-  def shift_owner?
-    @shift.organization_id == current_org_id
   end
 end
