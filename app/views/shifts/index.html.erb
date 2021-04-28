@@ -1,7 +1,7 @@
 <section class="shifts-list m-4">
 <h2>List of Shifts</h2>
 <% if current_user.has_org? %>
-  <p><%= link_to 'Create Shift', new_shift_path, class: "btn btn-primary" %></p>
+  <p><%= link_to "Create Shift", new_shift_path, class: "btn btn-primary" %></p>
 <% end %>
 
 
@@ -12,7 +12,7 @@
       <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
       <div class="row mb-3">
         <div class="col-4 font-weight-bold">Organization Name</div>
-        <div class="col-8"><%= shift.shift_org_name %></div>
+        <div class="col-8"><%= link_to shift.shift_org_name, organization_path(shift.organization_id) %></div>
       </div>
       <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Starts</div>
@@ -36,18 +36,18 @@
       </div>
       <% if current_user.has_org? %>
         <div class="text-right">
-          <span class="m-1"><%= link_to 'Edit', edit_shift_path(shift.id), class: "btn btn-primary" %></span>
-          <span class="m-1"><%= link_to 'Delete', shift_path(shift.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %></span>
+          <span class="m-1"><%= link_to "Edit", edit_shift_path(shift.id), class: "btn btn-primary" %></span>
+          <span class="m-1"><%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %></span>
         </div>
       <% end %>
       <% if current_user.worker? && shift.shift_open %>
         <div class="text-right">
-          <%= link_to 'Take Shift', take_shift_path(shift), method: :put, data: { confirm: 'You will be assigned to work this shift. Proceed?' }, class: "btn btn-primary" %>
+          <%= link_to "Take Shift", take_shift_path(shift), method: :put, data: { confirm: "You will be assigned to work this shift. Proceed?" }, class: "btn btn-primary" %>
         </div>
       <% end %>
       <% if !shift.shift_open && shift.worker_id == current_user.id %>
         <div class="text-right">
-          <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?' }, class: "btn btn-danger" %>
+          <%= link_to "Drop Shift", drop_shift_path(shift), method: :put, data: { confirm: "You are about to DROP this shift. Proceed?" }, class: "btn btn-danger" %>
         </div>
       <% end %>
       </div>
