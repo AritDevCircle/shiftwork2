@@ -15,7 +15,12 @@ class ShiftsController < ApplicationController
   end
 
   def new
-    @shift = Shift.new
+    if current_user.has_org?
+      @shift = Shift.new
+    else
+      flash[:danger] = "You are unauthorized to create new shifts."
+      redirect_to shifts_path
+    end
   end
 
   def edit
