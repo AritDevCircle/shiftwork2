@@ -1,6 +1,7 @@
 class WorkersController < ApplicationController
   before_action :logged_in_user, only: %i[index show new create edit update]
   before_action :set_worker, only: %i[show edit update]
+  before_action :verify_access, only: %i[show edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   
   def index
@@ -43,6 +44,14 @@ class WorkersController < ApplicationController
   def set_worker
     @worker = Worker.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @worker
+  end
+
+  # only the worker logged in has access to the worker actions
+  def verify_access
+    unless current_user.id == @worker.user_id
+      flash[:alert] = "You do not have authority to access that."
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def worker_params
