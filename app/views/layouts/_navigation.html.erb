@@ -1,19 +1,26 @@
-<nav>
-  <div>
-    <div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  
+    <div class="navbar-brand">
       <%= link_to "HOME", root_path %>
     </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
     <% if logged_in? %>
-      <ul>
-      <li><%= link_to "View Profile", user_path(current_user) %></li> 
-      <li><%= link_to "Edit Account", edit_user_path(current_user) %></li> 
-      <li><%= link_to "Log out", logout_path, method: :delete %></li> 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><%= link_to "View Profile", user_path(current_user), class: "nav-link" %></li> 
+      <li class="nav-item"><%= link_to "Edit Account", edit_user_path(current_user), class: "nav-link" %></li> 
+      <li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %></li> 
       </ul>
+      </div>
     <% else %>
-      <ul>
-        <li><%= link_to "Log in", login_path %></li> 
-        <li><%= link_to "Sign up", new_user_path %></li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><%= link_to "Log in", login_path, class: "nav-link" %></li> 
+        <li class="nav-item"><%= link_to "Sign up", new_user_path, class: "nav-link" %></li>
       </ul>
+    </div>
     <% end %>
-  </div>
+  
 </nav>
