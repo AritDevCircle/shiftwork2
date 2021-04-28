@@ -22,10 +22,14 @@
    </div>
 
       <div class="row workers-field py-2">
-      <%= f.label :worker_state, :class => "col-12 col-md-4 col-lg-2" %>
-      <%= f.text_field :worker_state, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
-   </div> 
-
+        <%= f.label :worker_state, :class => "col-12 col-md-4 col-lg-2" %>
+        <%= f.text_field :worker_state, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+      </div> 
+      
+      <div class="row workers-field py-2">
+        <%= f.label :bio, :class => "col-12 col-md-4 col-lg-2" %>
+        <%= f.text_field :bio, :class => "col-12 col-md-8 col-lg-10 mx-auto" %>
+      </div>
       <div class="row workers-field py-3">
       <%= f.submit "Update Account", :class => "col-auto mx-auto btn btn-primary" %>
          </div>  
