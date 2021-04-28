@@ -1,26 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+   <div class="container">
     <div class="navbar-brand">
-      <%= link_to "HOME", root_path %>
+      <%= link_to "ShiftWork", root_path %>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <% if logged_in? %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li> 
       <li class="nav-item"><%= link_to "View Profile", user_path(current_user), class: "nav-link" %></li> 
       <li class="nav-item"><%= link_to "Edit Account", edit_user_path(current_user), class: "nav-link" %></li> 
       <li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %></li> 
       </ul>
       </div>
     <% else %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+        <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li> 
         <li class="nav-item"><%= link_to "Log in", login_path, class: "nav-link" %></li> 
         <li class="nav-item"><%= link_to "Sign up", new_user_path, class: "nav-link" %></li>
       </ul>
     </div>
     <% end %>
-  
+  </div>
 </nav>
