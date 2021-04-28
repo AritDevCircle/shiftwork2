@@ -1,31 +1,14 @@
-<p>
+<div class="container-fluid">
+<p class="alert alert-light pl-5">
   The local Date and Time is <strong><%= Time.now.strftime("%B %d %Y, %I:%M %p") %></strong> <em>(Timezone: <%= Time.now.zone %>)</em>.
 </p>
+</div>
+<div class="jumbotron text-center">
+  <h1 class="display-3 mb-5">ShiftWork App</h1>
+  <p class="lead text-monospace" style="font-size: 1.55rem;">Are you a shiftworker looking for last-minute gigs? 
+    Or a business owner with open shifts to fill?</p>
+  <hr class="my-4">
+  <p class="lead mb-5 text-monospace" style="font-size: 1.55rem;">The Shiftwork app can connect you to shift opportunities or shiftworkers!</p>
+  <p class="text-center"><%= link_to "Sign up", new_user_path, class: "btn btn-info pl-5 pr-5" %></p>
+</div>
 
-<h3>All Open Shifts!</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Organization Name</th>
-      <th>Role</th>
-      <th>Description</th>
-      <th>Shift Starts</th>
-      <th>Shift Ends</th>
-      <th>Pay Rate</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @open_shifts.each do |shift| %>
-      <tr>
-        <td><%= shift.shift_org_name %></td>
-        <td><%= shift.shift_role %></td>
-        <td><%= shift.shift_description %></td>
-        <td><%= shift.shift_start.httpdate %></td>
-        <td><%= shift.shift_end.httpdate %></td>
-        <td><%= shift.shift_pay %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
