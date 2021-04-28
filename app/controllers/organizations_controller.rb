@@ -9,7 +9,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    if is_owner
+      @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    else 
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def new
