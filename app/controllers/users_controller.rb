@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update ]
 
   def index
-    @open_shifts = Shift.where(shift_open: true).order("updated_at DESC")
   end
 
   def show
