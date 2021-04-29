@@ -1,4 +1,5 @@
 <div class="container-fluid p-5">
+<% if @org_shifts %>
   <h3>Your Shifts</h3>
 
    <p><%= link_to "Create Shift", new_shift_path, class: "btn btn-primary" %></p>
@@ -40,4 +41,30 @@
             </div>
         <% end %>
     </div> 
+<% else %>
+
+  <div class="card m-auto">
+    <h3 class="card-header"><%= @organization_bio.org_name %></h3>
+    <div class="card-block">
+        <div class="row">
+            <div class="col-4">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item border-white"><b>Address </b></li>
+            <li class="list-group-item border-white"><b>City </b></li>
+            <li class="list-group-item border-white"><b>State </b></li>
+            <li class="list-group-item border-white"><b>Description </b></li>
+            </ul>   
+            </div>
+            <div class="col-8">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item"><%= @organization_bio.org_address %></li>
+            <li class="list-group-item"><%= @organization_bio.org_city %></li>
+            <li class="list-group-item"><%= @organization_bio.org_state %></li>
+            <li class="list-group-item"><%= @organization_bio.org_description %></li>
+            </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+<% end %>
 </div>

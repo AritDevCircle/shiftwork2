@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: %i[show edit update]
   before_action :set_user, only: %i[ show edit update ]
+  before_action :verify_access, only: %i[show edit update]
 
   def index
   end
@@ -46,6 +47,14 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
     raise ActiveRecord::RecordNotFound unless @user
+  end
+
+  # only the organization logged in has access to the organization actions
+  def verify_access
+    unless current_user.id == @user.id
+      flash[:warning] = "You do not have authority to access that."
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def user_params
