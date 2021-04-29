@@ -25,6 +25,10 @@ class ShiftsController < ApplicationController
   end
 
   def edit
+    unless @shift.shift_open?
+        flash[:danger] = "This shift is taken; cannot edit it!"
+        redirect_to shifts_path
+    end
   end
 
   def create
