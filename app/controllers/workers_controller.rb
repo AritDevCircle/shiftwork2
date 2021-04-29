@@ -1,14 +1,18 @@
 class WorkersController < ApplicationController
   before_action :logged_in_user, only: %i[index show new create edit update]
   before_action :set_worker, only: %i[show edit update]
-  before_action :verify_access, only: %i[show edit update]
+  before_action :verify_access, only: %i[ edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   
   def index
   end
 
   def show
-    @worker_shifts = Shift.where(worker_id: current_user.id).order("updated_at DESC")
+    if current_user.id == @worker.user_id
+        @worker_shifts = Shift.where(worker_id: current_user.id).order("updated_at DESC")
+    else
+        @worker_bio = Worker.where(id: params[:id]).select(:first_name, :last_name, :bio).first
+    end
   end
 
   def new
@@ -55,6 +59,6 @@ class WorkersController < ApplicationController
   end
 
   def worker_params
-    params.require(:worker).permit(:first_name, :last_name, :worker_city, :worker_state, :user_id)
+    params.require(:worker).permit(:first_name, :last_name, :worker_city, :worker_state, :bio, :user_id)
   end
 end
