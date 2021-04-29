@@ -63,7 +63,7 @@ class ShiftsController < ApplicationController
       flash[:danger] = "This Shift is already taken!"
       redirect_to shifts_path
     else
-      @shift.update_columns(worker_id: current_user.id, shift_open: false)
+      @shift.update_columns(worker_id: current_user.worker_account.id, shift_open: false)
       flash[:success] = "Shift has been assigned to you successfully!"
       redirect_to worker_path(current_user.worker_account.id)
     end
