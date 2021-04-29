@@ -4,24 +4,25 @@ RSpec.describe "UsersController", type: :request do
   let(:org_user) { create(:user, :org_user_type) }
   let(:sample_org) { create(:organization, user_id: org_user.id) }
 
-  describe "GET /index" do
-    before do
-      Shift.destroy_all
-      Organization.destroy_all
-      User.destroy_all
+  describe "GET /users/new" do
+    it "displays Sign Up form when user is not logged in" do
+      get "/users/new"
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("Sign up")
+      expect(response.body).to include("Create my account")
     end
 
-    it "returns page with list of open shifts only" do
-      shift_1 = create(:shift, :bartender_role, :open_shift, organization_id: sample_org.id)
-      shift_2 = create(:shift, :chef_role, :open_shift, organization_id: sample_org.id)
-      shift_3 = create(:shift, :front_of_house_role, :filled_shift, organization_id: sample_org.id)
-      
-      get "/"
-    
-      expect(response).to have_http_status(200)
-      expect(response.body).to include("Bartender")
-      expect(response.body).to include("Chef")
-      expect(response.body).not_to include("Front Of House")
+    it "displays error message and root_path if user is logged in" do
+      login_as(org_user)
+      get "/users/new"
+
+      expect(response).to redirect_to root_path
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Already logged in. Sign out first to create a new account.")
     end
   end
 
@@ -46,6 +47,20 @@ RSpec.describe "UsersController", type: :request do
 
       expect(response.body).to include("Password confirmation doesn&#39;t match Password")
       expect(response.body).to include("The form contains 1 error.")
+    end
+  end
+
+  describe "PATCH /users/:id" do
+    it "updates user information" do
+      login_as(org_user)
+      patch "/users/#{org_user.id}", params: { user: { password: "password456", password_confirmation: "password456" } }
+
+      expect(response).to redirect_to user_path(org_user.id)
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Account updated successfully!")
     end
   end
 end
