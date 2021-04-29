@@ -34,11 +34,11 @@
         <div class="col-4 font-weight-bold">Shift Status</div>
         <div class="col-8<% if shift.shift_open %> text-success">OPEN<% else %> text-danger">Filled<% end %></div>
       </div>
-      <% if current_user.has_org? %>
-        <div class="text-right">
-          <% if shift.shift_open %><span class="m-1"><%= link_to "Edit", edit_shift_path(shift.id), class: "btn btn-primary" %></span><% end %>
-          <span class="m-1"><%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %></span>
-        </div>
+      <% if current_user.has_org? && shift.shift_open? %>
+          <div class="text-right">
+            <span class="m-1"><%= link_to "Edit", edit_shift_path(shift.id), class: "btn btn-primary" %></span>
+            <span class="m-1"><%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %></span>
+          </div>
       <% end %>
       <% if current_user.worker? && shift.shift_open %>
         <div class="text-right">
