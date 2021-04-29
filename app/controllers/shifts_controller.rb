@@ -70,7 +70,7 @@ class ShiftsController < ApplicationController
   end
 
   def drop
-    if @shift.worker_id != current_user.id
+    if @shift.worker_id != current_user.worker_account.id
       flash[:danger] = "Shift is NOT assigned to you; cannot drop."
     else
       @shift.update_columns(worker_id: nil, shift_open: true)
