@@ -53,7 +53,7 @@ class WorkersController < ApplicationController
   # only the worker logged in has access to the worker actions
   def verify_access
     unless current_user.id == @worker.user_id
-      flash[:alert] = "You do not have authority to access that."
+      flash[:warning] = "You do not have authority to access that."
       redirect_to user_path(current_user.id)
     end
   end

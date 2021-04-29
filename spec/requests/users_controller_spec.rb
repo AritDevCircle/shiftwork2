@@ -13,7 +13,7 @@ RSpec.describe "UsersController", type: :request do
     end
 
     it "should display error message and redirect to root_path if user is already logged in" do
-      login_as(user)
+      login_as(user.email, user.password)
       get new_user_path
 
       expect(response).to redirect_to root_path
@@ -51,7 +51,9 @@ RSpec.describe "UsersController", type: :request do
 
   describe "PATCH /users/:id" do
     it "should update the user's information" do
-      login_as(user)
+      login_as(user.email, user.password)
+      user_email = user.email
+
       patch user_path(user.id), params: { user: { password: "password456", password_confirmation: "password456" } }
 
       expect(response).to redirect_to user_path(user.id)
@@ -60,6 +62,12 @@ RSpec.describe "UsersController", type: :request do
       follow_redirect!
 
       expect(response.body).to include("Account updated successfully!")
+
+      logout_user
+      login_as(user.email, "password456")
+      follow_redirect!
+
+      expect(response.body).to include("<b>Your Email:</b> #{user_email}")
     end
   end
 end

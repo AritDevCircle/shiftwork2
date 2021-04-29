@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :logged_in_user, only: %i[show new create edit update]
   before_action :set_organization, only: %i[show edit update]
-  before_action :verify_access, only: %i[show edit update]
+  before_action :verify_access, only: %i[ edit update]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   
   
@@ -9,7 +9,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    if current_user.id == @organization.user_id
+      @org_shifts = Shift.where(organization_id: @organization.id).order("updated_at DESC")
+    else 
+      @organization_bio = Organization.where(id: params[:id]).select(:org_name, :org_address, :org_description, :org_city, :org_state).first
+    end
   end
 
   def new
@@ -50,7 +54,7 @@ class OrganizationsController < ApplicationController
   # only the organization logged in has access to the organization actions
   def verify_access
     unless current_user.id == @organization.user_id
-      flash[:alert] = "You do not have authority to access that."
+      flash[:warning] = "You do not have authority to access that."
       redirect_to user_path(current_user.id)
     end
   end
