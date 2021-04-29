@@ -33,13 +33,8 @@
                         <div class="col-5 font-weight-bold">Shift Worker</div>
                         <div class="col-7"><% unless shift.shift_open %>Worker Name<% end %></div>
                     </div>
-<<<<<<< HEAD
-                    <d class="text-right">
-                        <%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %>
-=======
                     <div class="text-right">
                         <% if shift.shift_open %><%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %> <% end %>
->>>>>>> cam-fork/cam-hide-shift-edit-filled
                         <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
                     </d>                  
                 </div>
