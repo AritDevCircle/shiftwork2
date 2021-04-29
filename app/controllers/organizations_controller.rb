@@ -50,7 +50,7 @@ class OrganizationsController < ApplicationController
   # only the organization logged in has access to the organization actions
   def verify_access
     unless current_user.id == @organization.user_id
-      flash[:alert] = "You do not have authority to access that."
+      flash[:warning] = "You do not have authority to access that."
       redirect_to user_path(current_user.id)
     end
   end
