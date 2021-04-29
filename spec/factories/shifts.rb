@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :shift do
+    association :organization
     shift_start { "2021-12-30 12:00:00" }
     shift_end { "2021-12-30 15:00:00" }
     shift_pay { 22 }
     worker_id { nil }
-    organization_id { 1 }
   end
 
   trait :bartender_role do

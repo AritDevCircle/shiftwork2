@@ -1,12 +1,9 @@
 FactoryBot.define do
   factory :user, class: "User" do
-    email { "org_user@example.com" }
+    sequence(:email) { |n| "user#{n}@example.com" }
     password  { "password123" }
     password_confirmation { "password123" }
-
-    trait :org_user_type do
-      user_type { "organization" }
-    end
+    user_type { "organization" }
 
     trait :worker_user_type do
       user_type { "worker" }

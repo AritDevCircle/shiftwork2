@@ -1,21 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe "UsersController", type: :request do
-  let(:org_user) { create(:user, :org_user_type) }
-  let(:sample_org) { create(:organization, user_id: org_user.id) }
+  let(:user) { create(:user) }
 
   describe "GET /users/new" do
-    it "displays Sign Up form when user is not logged in" do
-      get "/users/new"
+    it "should display Sign Up form when user is not logged in" do
+      get new_user_path
 
       expect(response).to have_http_status(200)
       expect(response.body).to include("Sign up")
       expect(response.body).to include("Create my account")
     end
 
-    it "displays error message and root_path if user is logged in" do
-      login_as(org_user)
-      get "/users/new"
+    it "should display error message and redirect to root_path if user is already logged in" do
+      login_as(user)
+      get new_user_path
 
       expect(response).to redirect_to root_path
       expect(response).to have_http_status(302)
@@ -31,8 +30,8 @@ RSpec.describe "UsersController", type: :request do
       User.destroy_all
     end
 
-    it "creates a user when all necessary params are supplied" do
-      post "/users", params: { user: { email: "org_user@example.com", password: "password123", password_confirmation: "password123", user_type: "organization" } }
+    it "should create a user when all necessary params are supplied" do
+      post users_path, params: { user: { email: "user@example.com", password: "password123", password_confirmation: "password123", user_type: "organization" } }
 
       expect(response).to redirect_to login_path
       expect(response).to have_http_status(302)
@@ -42,8 +41,8 @@ RSpec.describe "UsersController", type: :request do
       expect(response.body).to include("Account created successfully! Please login below.")
     end
 
-    it "displays the 'Sign Up' view when one or more necessary params are missing" do
-      post "/users", params: { user: { email: "org_user@example.com", password: "password123", password_confirmation: "", user_type: "organization" } }
+    it "should display the 'Sign Up' view if one or more necessary params are missing" do
+      post users_path, params: { user: { email: "another_user@example.com", password: "password123", password_confirmation: "", user_type: "organization" } }
 
       expect(response.body).to include("Password confirmation doesn&#39;t match Password")
       expect(response.body).to include("The form contains 1 error.")
@@ -51,11 +50,11 @@ RSpec.describe "UsersController", type: :request do
   end
 
   describe "PATCH /users/:id" do
-    it "updates user information" do
-      login_as(org_user)
-      patch "/users/#{org_user.id}", params: { user: { password: "password456", password_confirmation: "password456" } }
+    it "should update the user's information" do
+      login_as(user)
+      patch user_path(user.id), params: { user: { password: "password456", password_confirmation: "password456" } }
 
-      expect(response).to redirect_to user_path(org_user.id)
+      expect(response).to redirect_to user_path(user.id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
