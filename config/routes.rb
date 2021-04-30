@@ -17,3 +17,6 @@ Rails.application.routes.draw do
   end
   resources :workers
 end
+if Rails.env.production?
+  get '404', :to => 'application#page_not_found'
+  end
