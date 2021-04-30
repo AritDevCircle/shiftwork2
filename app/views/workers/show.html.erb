@@ -46,7 +46,7 @@
                     
   <% if current_user.worker? && Time.current < shift.shift_start %>
      <div class="text-right">
-      <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?', class: "btn btn-primary" } %>
+      <%= link_to 'Drop Shift', drop_shift_path(shift), method: :put, data: { confirm: 'You are about to DROP this shift. Proceed?' }, class: "btn btn-danger" %>
    </div>
   <% end %>
   </div>
