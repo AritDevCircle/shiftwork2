@@ -36,8 +36,8 @@
             </div>
         </div>
         <div class="card-footer">
-        <p><%= link_to 'View Your Shifts', organization_path(@user_org.id), class: "btn btn-link" %></p>
-        <p><%= link_to 'Edit Org', edit_organization_path(@user_org.id), class: "btn btn-link" %></p>
+        <p><%= link_to "View Your Shifts", organization_path(@user_org.id), class: "btn btn-link" %></p>
+        <p><%= link_to "Edit Org", edit_organization_path(@user_org.id), class: "btn btn-link" %></p>
         </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
         <h1 class="display-4">Welcome to the ShiftWork App!</h1>
         <hr class="my-5">
         <p class="lead">Please finish setting up your profile.</p>
-        <p class="mt-5"><%= link_to 'Create Organization', new_organization_path, class: "btn btn-primary" %></p>
+        <p class="mt-5"><%= link_to "Create Organization", new_organization_path, class: "btn btn-primary" %></p>
       </div>
       <% end %>
     </div>
@@ -64,6 +64,7 @@
             <li class="list-group-item border-white"><b>Last Name </b></li>
             <li class="list-group-item border-white"><b>City</b></li>
             <li class="list-group-item border-white"><b>State </b></li>
+            <li class="list-group-item border-white"><b>Bio </b></li>
             </div>
             <div class="col-8">
             <ul class="list-group list-group-flush">
@@ -71,13 +72,14 @@
                 <li class="list-group-item"><%= @user.worker_account.last_name %></li>
                 <li class="list-group-item"><%= @user.worker_account.worker_city %></li>
                 <li class="list-group-item"><%= @user.worker_account.worker_state %></li>
+                <li class="list-group-item"><%= @user.worker_account.bio %></li>
                 </ul>
             </div>
           </div>
           <div class="card-footer">
-          <p><%= link_to 'View Your Assigned Shifts', worker_path(@user.worker_account.id), class: "btn btn-link" %></p>
-          <p><%= link_to 'View All Shifts', shifts_path, class: "btn btn-link" %></p>
-          <p><%= link_to 'Edit Worker Account', edit_worker_path(@user.worker_account.id), class: "btn btn-link" %></p>
+          <p><%= link_to "View Your Assigned Shifts", worker_path(@user.worker_account.id), class: "btn btn-link" %></p>
+          <p><%= link_to "View All Shifts", shifts_path, class: "btn btn-link" %></p>
+          <p><%= link_to "Edit Worker Account", edit_worker_path(@user.worker_account.id), class: "btn btn-link" %></p>
           </div>
           </div>
         </div>
@@ -86,7 +88,7 @@
         <h1 class="display-4">Welcome to the ShiftWork App!</h1>
         <hr class="my-5">
         <p class="lead">Please finish setting up your profile.</p>
-        <p class="mt-5"><%= link_to 'Create Worker Account', new_worker_path, class: "btn btn-primary" %></p>
+        <p class="mt-5"><%= link_to "Create Worker Account", new_worker_path, class: "btn btn-primary" %></p>
       </div>
       <% end %>
     </div>

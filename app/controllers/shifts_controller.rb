@@ -2,6 +2,7 @@ class ShiftsController < ApplicationController
   before_action :logged_in_user
   before_action :set_shift, only: %i[ show edit update destroy take drop ]
   before_action :verify_access, only: %i[ edit update destroy ]
+  before_action :verify_shift_open, only: %i[ edit update destroy ]
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def index
@@ -95,6 +96,13 @@ class ShiftsController < ApplicationController
     unless @shift.organization_id == current_org_id
       flash[:warning] = "You do not have authority to access that."
       redirect_to user_path(current_user.id)
+    end
+  end
+
+  def verify_shift_open
+    unless @shift.shift_open?
+        flash[:warning] = "This shift is taken; cannot edit it!"
+        redirect_to shifts_path
     end
   end
 
