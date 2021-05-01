@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'errors/page_not_found'
   # match '*unmatched', to: 'application#render_not_found', via: :all
 
   root 'users#index'
