@@ -14,6 +14,11 @@ class Shift < ApplicationRecord
     Organization.where(id: self.organization_id).first.org_name
   end
 
+  def shift_worker_name
+    worker = Worker.where(id: self.worker_id).first
+    return "#{worker.first_name} #{worker.last_name}"
+  end
+
   private
 
   def shift_end_after_start  
