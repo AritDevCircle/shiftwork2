@@ -7,6 +7,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <title>Shiftwork App</title>
   </head>
 
@@ -20,5 +21,14 @@
       <%= yield %>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+      flatpickr('.datepicker-js-field', {
+        enableTime: true,
+        dateFormat: "F, d Y H:i",
+        altInput: true,
+        altFormat: "F j, Y H:i"
+      });
+    </script>
   </body>
 </html>

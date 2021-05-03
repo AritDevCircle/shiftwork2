@@ -11,12 +11,13 @@
                     <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Starts</div>
-                        <div class="col-7"><%= shift.shift_start.httpdate %></div>
+                        <div class="col-7"><%= shift.shift_start.strftime("%A %B %-d %Y %l:%M %p") %></div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Ends</div>
                         <div class="col-7"><%= shift.shift_end.httpdate %></div>
                     </div>
+                    Shift Duration: <%= distance_of_time_in_words(shift.shift_start, shift.shift_end) %>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Pay Rate</div>
                         <div class="col-7"><%= shift.shift_pay %></div>
