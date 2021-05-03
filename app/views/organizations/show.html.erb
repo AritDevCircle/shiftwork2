@@ -31,7 +31,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Worker</div>
-                        <div class="col-7"><% unless shift.shift_open %>Worker Name<% end %></div>
+                        <div class="col-7"><% unless shift.shift_open %><%= shift.shift_worker_name %><% end %></div>
                     </div>
                     <% if shift.shift_open %>
                     <div class="text-right">
