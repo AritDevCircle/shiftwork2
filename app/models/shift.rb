@@ -16,7 +16,9 @@ class Shift < ApplicationRecord
 
   def shift_worker_name
     worker = Worker.where(id: self.worker_id).first
-    return "#{worker.first_name} #{worker.last_name}"
+    if worker
+      return "#{worker.first_name} #{worker.last_name}" 
+    end
   end
 
   private
