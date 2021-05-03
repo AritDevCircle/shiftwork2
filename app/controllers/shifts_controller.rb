@@ -64,14 +64,14 @@ class ShiftsController < ApplicationController
       flash[:danger] = "This Shift is already taken!"
       redirect_to shifts_path
     else
-      @shift.update_columns(worker_id: current_user.id, shift_open: false)
+      @shift.update_columns(worker_id: current_user.worker_account.id, shift_open: false)
       flash[:success] = "Shift has been assigned to you successfully!"
       redirect_to worker_path(current_user.worker_account.id)
     end
   end
 
   def drop
-    if @shift.worker_id != current_user.id
+    if @shift.worker_id != current_user.worker_account.id
       flash[:danger] = "Shift is NOT assigned to you; cannot drop."
     else
       @shift.update_columns(worker_id: nil, shift_open: true)
