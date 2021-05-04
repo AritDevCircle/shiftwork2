@@ -26,6 +26,10 @@ class ShiftsController < ApplicationController
   end
 
   def edit
+    if !@shift.shift_open
+      flash[:danger] = "Shift has been filled; you cannot edit it now."
+      return
+    end
   end
 
   def create
@@ -44,7 +48,10 @@ class ShiftsController < ApplicationController
   end
 
   def update
-    if @shift.update(shift_params.merge(
+    if !@shift.shift_open
+      flash[:danger] = "Shift has been filled; you cannot edit it now."
+      return
+    elsif @shift.update(shift_params.merge(
       shift_start: convert_to_utc(params[:shift][:shift_start]),
       shift_end: convert_to_utc(params[:shift][:shift_end]))
     )
@@ -57,12 +64,17 @@ class ShiftsController < ApplicationController
   end
 
   def destroy
-    @shift.destroy
-    if @shift.destroyed?
-      flash[:success] = "Shift deleted successfully!"
-      redirect_to organization_path(current_org_id)
+    if !@shift.shift_open
+      flash[:danger] = "Shift has been filled; you cannot delete it now."
+      return
     else
-      flash[:danger] = @shift.errors.full_messages.to_sentence
+      @shift.destroy
+      if @shift.destroyed?
+        flash[:success] = "Shift deleted successfully!"
+        redirect_to organization_path(current_org_id)
+      else
+        flash[:danger] = @shift.errors.full_messages.to_sentence
+      end
     end
   end
 
