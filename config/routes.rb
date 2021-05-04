@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'errors/page_not_found'
   match "/404", to: "errors#page_not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
   # match '*unmatched', to: 'application#render_not_found', via: :all
 
   root 'users#index'
