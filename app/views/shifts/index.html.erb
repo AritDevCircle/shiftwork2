@@ -16,15 +16,19 @@
       </div>
       <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Starts</div>
-        <div class="col-8"><%= shift.shift_start.httpdate %></div>
+        <div class="col-8"><%= in_user_timezone(shift.shift_start) %></div>
       </div>
       <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Ends</div>
-        <div class="col-8"><%= shift.shift_end.httpdate %></div>
+        <div class="col-8"><%= in_user_timezone(shift.shift_end) %></div>
+      </div>
+      <div class="row mb-3">
+          <div class="col-4 font-weight-bold">Shift Duration</div>
+          <div class="col-8"><%= distance_of_time_in_words(shift.shift_start, shift.shift_end) %></div>
       </div>
       <div class="row mb-3">
         <div class="col-4 font-weight-bold">Pay Rate</div>
-        <div class="col-8"><%= shift.shift_pay %></div>
+        <div class="col-8">$<%= shift.shift_pay %>/hour</div>
       </div>
       <div class="row mb-3">
         <div class="col-4 font-weight-bold">Shift Description</div>
@@ -45,7 +49,7 @@
           <%= link_to "Take Shift", take_shift_path(shift), method: :put, data: { confirm: "You will be assigned to work this shift. Proceed?" }, class: "btn btn-primary" %>
         </div>
       <% end %>
-      <% if !shift.shift_open && shift.worker_id == current_user.id %>
+      <% if !shift.shift_open && shift.filled_by(current_user) %>
         <div class="text-right">
           <%= link_to "Drop Shift", drop_shift_path(shift), method: :put, data: { confirm: "You are about to DROP this shift. Proceed?" }, class: "btn btn-danger" %>
         </div>

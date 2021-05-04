@@ -29,7 +29,11 @@ class ShiftsController < ApplicationController
   end
 
   def create
-    @shift = Shift.new(shift_params.merge(organization_id: current_org_id))
+    @shift = Shift.new(shift_params.merge(
+      organization_id: current_org_id,
+      shift_start: convert_to_utc(params[:shift][:shift_start]),
+      shift_end: convert_to_utc(params[:shift][:shift_end]))
+    )
     if @shift.save
       flash[:success] = "Shift created successfully!"
       redirect_to organization_path(current_org_id)
@@ -40,7 +44,10 @@ class ShiftsController < ApplicationController
   end
 
   def update
-    if @shift.update(shift_params)
+    if @shift.update(shift_params.merge(
+      shift_start: convert_to_utc(params[:shift][:shift_start]),
+      shift_end: convert_to_utc(params[:shift][:shift_end]))
+    )
       flash[:success] = "Shift updated successfully!"
       redirect_to organization_path(current_org_id)
     else
@@ -104,6 +111,10 @@ class ShiftsController < ApplicationController
         flash[:warning] = "This shift is taken; cannot edit it!"
         redirect_to shifts_path
     end
+  end
+
+  def convert_to_utc(shift_time)
+    return shift_time.in_time_zone("#{current_user.timezone}").in_time_zone('UTC')
   end
 
   def shift_params

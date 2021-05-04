@@ -21,6 +21,10 @@ class Shift < ApplicationRecord
     end
   end
 
+  def filled_by(user)
+    Worker.where(id: self.worker_id).first.user_id == user.id
+  end
+
   private
 
   def shift_end_after_start  

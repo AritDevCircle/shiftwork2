@@ -11,16 +11,19 @@
                     <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Starts</div>
-                        <div class="col-7"><%= shift.shift_start.strftime("%A %B %-d %Y %l:%M %p") %></div>
+                        <div class="col-7"><%= in_user_timezone(shift.shift_start) %></div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Ends</div>
-                        <div class="col-7"><%= shift.shift_end.httpdate %></div>
+                        <div class="col-7"><%= in_user_timezone(shift.shift_end) %></div>
                     </div>
-                    Shift Duration: <%= distance_of_time_in_words(shift.shift_start, shift.shift_end) %>
+                    <div class="row mb-3">
+                        <div class="col-5 font-weight-bold">Shift Duration</div>
+                        <div class="col-7"><%= distance_of_time_in_words(shift.shift_start, shift.shift_end) %></div>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Pay Rate</div>
-                        <div class="col-7"><%= shift.shift_pay %></div>
+                        <div class="col-7">$<%= shift.shift_pay %>/hour</div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Description</div>
@@ -30,10 +33,12 @@
                         <div class="col-5 font-weight-bold">Shift Status</div>
                         <div class="col-7"><% if shift.shift_open %>Open<% else %>Filled<% end %></div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-5 font-weight-bold">Shift Worker</div>
-                        <div class="col-7"><% unless shift.shift_open %><%= link_to shift.shift_worker_name, worker_path(shift.worker_id) %><% end %></div>
-                    </div>
+                    <% if !shift.shift_open %>
+                        <div class="row mb-3">
+                            <div class="col-5 font-weight-bold">Shift Worker</div>
+                            <div class="col-7"><% unless shift.shift_open %><%= link_to shift.shift_worker_name, worker_path(shift.worker_id) %><% end %></div>
+                        </div>
+                    <% end %>
                     <% if shift.shift_open %>
                     <div class="text-right">
                         <%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %>
