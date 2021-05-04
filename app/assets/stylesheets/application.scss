@@ -14,12 +14,9 @@
  *= require_self
  */
 
-
-
 .form-control {
-  width: inherit;s
-
-  &.inline {
-    display: inline;
-  }
+    width: inherit;
+    s &.inline {
+        display: inline;
+    }
 }

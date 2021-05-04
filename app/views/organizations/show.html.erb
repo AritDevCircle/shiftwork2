@@ -36,7 +36,7 @@
                     <div class="text-right">
                         <% if shift.shift_open %><%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %> <% end %>
                         <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
-                    </d>                  
+                                    
                 </div>
             </div>
         <% end %>
