@@ -10,9 +10,5 @@ class Worker < ApplicationRecord
     "#{self.first_name} #{self.last_name}"
   end
 
-  def completed_shifts
-    Shift.where(worker_id: self.id).count
-  end
-
   private
 end
