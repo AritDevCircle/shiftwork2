@@ -8,45 +8,13 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
   validates :user_type, presence: true, inclusion: { in: %w(organization worker) }
 
-  AVAILABLE_TIMEZONES = [
-    "American Samoa",
-    "Hawaii",
-    "Alaska",
-    "Pacific Time (US & Canada)",
-    "Mountain Time (US & Canada)",
-    "Central Time (US & Canada)",
-    "Eastern Time (US & Canada)",
-    "Atlantic Time (Canada)",
-    "Newfoundland",
-    "Buenos Aires",
-    "Mid-Atlantic",
-    "Azores",
-    "London",
-    "Nigeria",
-    "Cairo",
-    "Moscow",
-    "Tehran",
-    "Abu Dhabi",
-    "Kabul",
-    "Islamabad",
-    "New Delhi",
-    "Kathmandu",
-    "Dhaka",
-    "Rangoon",
-    "Bangkok",
-    "Singapore",
-    "Tokyo",
-    "Adelaide",
-    "Sydney",
-    "New Caledonia",
-    "Fiji",
-    "Chatham Is.",
-    "Samoa"
-  ]
-
   # TO-DO: refactor like worker?
   def has_org?
     Organization.where(user_id: self.id).count == 1
+  end
+
+  def org_account
+    return Organization.where(user_id: self.id).first if self.has_org?
   end
 
   def worker?

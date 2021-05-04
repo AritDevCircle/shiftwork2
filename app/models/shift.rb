@@ -25,6 +25,10 @@ class Shift < ApplicationRecord
     Worker.where(id: self.worker_id).first.user_id == user.id
   end
 
+  def can_be_dropped?
+    ((self.shift_start - Time.now) / 1.hour) > 24
+  end
+
   private
 
   def shift_end_after_start  

@@ -26,9 +26,12 @@
       flatpickr('.datepicker-js-field', {
         enableTime: true,
         dateFormat: "F, d Y H:i",
-        altInput: true,
-        altFormat: "F j, Y H:i"
+        altFormat: "F j, Y at h:i K",
       });
+
+      if (document.querySelector(".alert" )) {
+        document.querySelector(".alert" ).classList.add('fade');
+      }
     </script>
   </body>
 </html>

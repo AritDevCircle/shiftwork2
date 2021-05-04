@@ -7,7 +7,7 @@ class ShiftsController < ApplicationController
 
   def index
     if current_user.has_org?
-      @shifts = Shift.where(organization_id: current_org_id).order("updated_at DESC") 
+      redirect_to organization_path(current_org_id)
     else
       @shifts = Shift.all.order("updated_at DESC")
     end
@@ -26,32 +26,30 @@ class ShiftsController < ApplicationController
   end
 
   def edit
-    if !@shift.shift_open
-      flash[:danger] = "Shift has been filled; you cannot edit it now."
-      return
-    end
   end
 
   def create
-    @shift = Shift.new(shift_params.merge(
+    if end_before_start(params[:shift][:shift_start], params[:shift][:shift_end])
+      flash[:danger] = "Shift-end cannot be before shift-start!"
+      render 'new'
+    else
+      @shift = Shift.new(shift_params.merge(
       organization_id: current_org_id,
       shift_start: convert_to_utc(params[:shift][:shift_start]),
       shift_end: convert_to_utc(params[:shift][:shift_end]))
     )
-    if @shift.save
-      flash[:success] = "Shift created successfully!"
-      redirect_to organization_path(current_org_id)
-    else
-      flash[:danger] = @shift.errors.full_messages.to_sentence
-      render 'new'
+      if @shift.save
+        flash[:success] = "Shift created successfully!"
+        redirect_to organization_path(current_org_id)
+      else
+        flash[:danger] = @shift.errors.full_messages.to_sentence
+        render 'new'
+      end
     end
   end
 
   def update
-    if !@shift.shift_open
-      flash[:danger] = "Shift has been filled; you cannot edit it now."
-      return
-    elsif @shift.update(shift_params.merge(
+    if @shift.update(shift_params.merge(
       shift_start: convert_to_utc(params[:shift][:shift_start]),
       shift_end: convert_to_utc(params[:shift][:shift_end]))
     )
@@ -64,17 +62,12 @@ class ShiftsController < ApplicationController
   end
 
   def destroy
-    if !@shift.shift_open
-      flash[:danger] = "Shift has been filled; you cannot delete it now."
-      return
+    @shift.destroy
+    if @shift.destroyed?
+      flash[:success] = "Shift deleted successfully!"
+      redirect_to organization_path(current_org_id)
     else
-      @shift.destroy
-      if @shift.destroyed?
-        flash[:success] = "Shift deleted successfully!"
-        redirect_to organization_path(current_org_id)
-      else
-        flash[:danger] = @shift.errors.full_messages.to_sentence
-      end
+      flash[:danger] = @shift.errors.full_messages.to_sentence
     end
   end
 
@@ -92,6 +85,8 @@ class ShiftsController < ApplicationController
   def drop
     if @shift.worker_id != current_user.worker_account.id
       flash[:danger] = "Shift is NOT assigned to you; cannot drop."
+    elsif !@shift.can_be_dropped?
+      flash[:danger] = "Shift starts in less than 24 hours; cannot drop."
     else
       @shift.update_columns(worker_id: nil, shift_open: true)
       flash[:success] = "Shift has been dropped successfully!"
@@ -127,6 +122,10 @@ class ShiftsController < ApplicationController
 
   def convert_to_utc(shift_time)
     return shift_time.in_time_zone("#{current_user.timezone}").in_time_zone('UTC')
+  end
+
+  def end_before_start(start_time, end_time)
+    end_time < start_time
   end
 
   def shift_params

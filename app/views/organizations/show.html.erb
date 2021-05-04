@@ -39,12 +39,14 @@
                             <div class="col-7"><% unless shift.shift_open %><%= link_to shift.shift_worker_name, worker_path(shift.worker_id) %><% end %></div>
                         </div>
                     <% end %>
-                    <% if shift.shift_open %>
                     <div class="text-right">
-                        <%= link_to "Edit", edit_shift_path(shift.id), class: "btn" %>
-                        <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn" %>
-                    </div>     
-                     <% end %>             
+                        <% if shift.shift_open %>
+                            <%= link_to "Edit", edit_shift_path(shift.id), class: "btn btn-primary" %>
+                            <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+                        <% else %>
+                            <p class="mt-4 text-muted">Your shift has been filled and cannot be edited or deleted</p>
+                        <% end %> 
+                    </div>                 
                 </div>
             </div>
         <% end %>

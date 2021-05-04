@@ -17,9 +17,18 @@
  @import "bootstrap/scss/bootstrap";
 
 .form-control {
-  width: inherit;s
+  width: inherit;
 
   &.inline {
     display: inline;
   }
+}
+
+.alert {
+  opacity: 1;
+  transition: opacity 3s; 
+}
+
+.alert.fade {
+  opacity: 0;
 }
