@@ -32,6 +32,9 @@ class ShiftsController < ApplicationController
     if end_before_start(params[:shift][:shift_start], params[:shift][:shift_end])
       flash[:danger] = "Shift-end cannot be before shift-start!"
       render 'new'
+    elsif too_short(params[:shift][:shift_start], params[:shift][:shift_end])
+      flash[:danger] = "Shift must be at least 1 hour long!"
+      render 'new'
     else
       @shift = Shift.new(shift_params.merge(
       organization_id: current_org_id,
@@ -126,6 +129,10 @@ class ShiftsController < ApplicationController
 
   def end_before_start(start_time, end_time)
     end_time < start_time
+  end
+
+  def too_short(start_time, end_time)
+    ((end_time.to_date - start_time.to_date) / 1.hour) < 1
   end
 
   def shift_params

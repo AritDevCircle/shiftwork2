@@ -8,8 +8,6 @@ class Shift < ApplicationRecord
   validates :shift_end, presence: true
   validates :shift_pay, presence: true, numericality: { greater_than_or_equal_to: 0,  only_integer: true }
 
-  # validate :shift_end_after_start
-
   def shift_org_name
     Organization.where(id: self.organization_id).first.org_name
   end
@@ -30,10 +28,4 @@ class Shift < ApplicationRecord
   end
 
   private
-
-  def shift_end_after_start  
-    if :shift_end < :shift_start
-      errors.add(:shift_end, "must occur AFTER the shift start date & time") 
-    end
-  end
 end
