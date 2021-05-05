@@ -56,6 +56,6 @@
     </div>
     <% else %>
       <h4>Worker Name: <%= @worker.worker_full_name %></h4>
-      <p><strong>Bio:</strong> <%= @worker&.bio %></p>
+      <p><strong>Bio:</strong> <%= @worker.bio ? @worker.bio : 'not available' %></p>
   <% end %>
 </div>
