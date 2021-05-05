@@ -1,4 +1,4 @@
-/*
+    /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -13,10 +13,15 @@
  *= require_tree .
  *= require_self
  */
-
-.form-control {
-    width: inherit;
-    s &.inline {
-        display: inline;
+    
+    @import "bootstrap/scss/bootstrap";
+    .form-control {
+        width: inherit;
+        &.inline {
+            display: inline;
+        }
     }
-}
+    
+    .alert.fade {
+        opacity: 0;
+    }
