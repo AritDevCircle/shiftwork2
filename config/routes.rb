@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match '*unmatched', to: 'application#render_not_found', via: :all
+  match '/404', to: 'application#render_not_found', via: :all
 
   root 'users#index'
 
