@@ -6,5 +6,9 @@ class Worker < ApplicationRecord
   validates :worker_city, presence: true
   validates :worker_state, presence: true
 
+  def worker_full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
   private
 end

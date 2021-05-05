@@ -5,14 +5,24 @@
   <div>
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'shared/error_messages' %>
-    <div class="form-group">
-      <%= f.label :password, class: "col-form-label" %>
-      <%= f.password_field :password, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label :password_confirmation, "Confirmation", class: "col-form-label" %>
-      <%= f.password_field :password_confirmation, class: "form-control" %>
-    </div>
+      <p>To change your password, enter the new password below.<br>
+      To leave it unchanged, enter your current password instead.</p>
+      
+      <div class="form-group">
+        <%= f.label :password, class: "col-form-label" %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, "Confirmation", class: "col-form-label" %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+
+      <div class="form-group pb-3">
+        <%= f.label :timezone, class: "col-form-label" %>
+        <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, {}, {class: "form-control"} %>
+      </div>
+      
       <%= f.submit "Update my account", class: "btn btn-primary" %>
     <% end %>
   </div>

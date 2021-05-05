@@ -13,6 +13,10 @@ class User < ApplicationRecord
     Organization.where(user_id: self.id).count == 1
   end
 
+  def org_account
+    return Organization.where(user_id: self.id).first if self.has_org?
+  end
+
   def worker?
     Worker.where(user_id: self.id).exists?
   end

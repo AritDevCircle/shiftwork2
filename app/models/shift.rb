@@ -7,8 +7,9 @@ class Shift < ApplicationRecord
   validates :shift_start, presence: true
   validates :shift_end, presence: true
   validates :shift_pay, presence: true, numericality: { greater_than_or_equal_to: 0,  only_integer: true }
-
-  # validate :shift_end_after_start
+  
+  validate :shift_not_too_short
+  validate :shift_ends_after_start
 
   def shift_org_name
     Organization.where(id: self.organization_id).first.org_name
@@ -21,11 +22,26 @@ class Shift < ApplicationRecord
     end
   end
 
+  def filled_by(user)
+    Worker.where(id: self.worker_id).first.user_id == user.id
+  end
+
+  def can_be_dropped?
+    ((self.shift_start - Time.now) / 1.hour) > 24
+  end
+
   private
 
-  def shift_end_after_start  
-    if :shift_end < :shift_start
-      errors.add(:shift_end, "must occur AFTER the shift start date & time") 
+  def shift_not_too_short
+    if ((self.shift_end - self.shift_start) / 1.hour) < 1
+      errors.add(:shift, "duration must be at least 1 hour!")
     end
   end
+
+  def shift_ends_after_start
+    if self.shift_end < self.shift_start
+      errors.add(:shift, "cannot end before it starts!")
+    end
+  end
+
 end

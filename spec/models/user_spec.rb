@@ -39,6 +39,18 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "org_account method" do
+    it "should return the Organization for an org-user if there is one" do
+      sample_org = create(:organization, user_id: org_user.id)
+
+      expect(org_user.org_account).to eq(sample_org)
+    end
+
+    it "should return nil for a worker-user with no associated worker account" do
+      expect(org_user.org_account).to eq(nil)
+    end
+  end
+
   describe "worker_account method" do
     it "should return the Worker Account for a worker-user if there is one" do
       sample_worker_account = create(:worker, user_id: worker_user.id)

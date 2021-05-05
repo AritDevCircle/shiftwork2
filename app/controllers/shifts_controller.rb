@@ -7,7 +7,7 @@ class ShiftsController < ApplicationController
 
   def index
     if current_user.has_org?
-      @shifts = Shift.where(organization_id: current_org_id).order("updated_at DESC") 
+      redirect_to organization_path(current_org_id)
     else
       @shifts = Shift.all.order("updated_at DESC")
     end
@@ -29,18 +29,25 @@ class ShiftsController < ApplicationController
   end
 
   def create
-    @shift = Shift.new(shift_params.merge(organization_id: current_org_id))
+    @shift = Shift.new(shift_params.merge(
+      organization_id: current_org_id,
+      shift_start: convert_to_utc(params[:shift][:shift_start]),
+      shift_end: convert_to_utc(params[:shift][:shift_end]))
+    )
     if @shift.save
       flash[:success] = "Shift created successfully!"
       redirect_to organization_path(current_org_id)
     else
       flash[:danger] = @shift.errors.full_messages.to_sentence
-      render 'new'
+      redirect_to new_shift_path
     end
   end
 
   def update
-    if @shift.update(shift_params)
+    if @shift.update(shift_params.merge(
+      shift_start: convert_to_utc(params[:shift][:shift_start]),
+      shift_end: convert_to_utc(params[:shift][:shift_end]))
+    )
       flash[:success] = "Shift updated successfully!"
       redirect_to organization_path(current_org_id)
     else
@@ -73,6 +80,8 @@ class ShiftsController < ApplicationController
   def drop
     if @shift.worker_id != current_user.worker_account.id
       flash[:danger] = "Shift is NOT assigned to you; cannot drop."
+    elsif !@shift.can_be_dropped?
+      flash[:danger] = "Shift starts in less than 24 hours; cannot drop."
     else
       @shift.update_columns(worker_id: nil, shift_open: true)
       flash[:success] = "Shift has been dropped successfully!"
@@ -104,6 +113,10 @@ class ShiftsController < ApplicationController
         flash[:warning] = "This shift is taken; cannot edit it!"
         redirect_to shifts_path
     end
+  end
+
+  def convert_to_utc(shift_time)
+    return shift_time.in_time_zone("#{current_user.timezone}").in_time_zone('UTC')
   end
 
   def shift_params
