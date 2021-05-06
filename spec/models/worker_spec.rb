@@ -12,6 +12,10 @@ RSpec.describe Worker, type: :model do
 		it { is_expected.to validate_presence_of(:worker_state) }
 	end
 
+    describe "associations" do
+        it {should belong_to(:user)}
+    end
+
 	describe "worker_full_name method" do
 		subject { test_worker }
 
