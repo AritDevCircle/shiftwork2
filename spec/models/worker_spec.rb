@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Worker, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
 	let(:test_worker) { create(:worker) }
 
 	describe "validations" do
@@ -11,7 +10,6 @@ RSpec.describe Worker, type: :model do
 		it { is_expected.to validate_presence_of(:last_name) }
 		it { is_expected.to validate_presence_of(:worker_city) }
 		it { is_expected.to validate_presence_of(:worker_state) }
-		# TODO: add case sensitivity for first_name and last_name?
 	end
 
 	describe "worker_full_name method" do
