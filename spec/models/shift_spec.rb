@@ -49,11 +49,11 @@ RSpec.describe Shift, type: :model do
     it "should return true when shift can be dropped" do
       expect(shift1.can_be_dropped?).to be(true)
     end
- #hard-coded the date less 24hrs. Is there a way to make a dynamic?
+ #hard-coded the date less 24hrs. Is there a way to make it dynamic? Thinking about the ways
     it "should return false when shift is less than 24hrs from Now" do
       shift2 = create(:shift, :chef_role, :filled_shift, shift_start: "2021-05-09 12:00:00")
       expect(shift2.can_be_dropped?).to be(false)
     end
   end
-   #private methods how to test???
+   #private methods What is the best way to test?
 end
