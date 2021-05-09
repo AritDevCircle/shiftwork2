@@ -53,11 +53,12 @@ We are currently running Cycle 2 from March 8th through May 28th 2021 (12 weeks)
 2. Fork this project to your GitHub Account.
 3. Clone your forked project to your local machine.
 4. Make sure Postgres is running.
-5. Add `database.yml` file to `config` folder.  Add the following code for your local [config/database.yml](https://gist.github.com/msarit/6ec31a5c1feef81ce44d3810bf58cdfd) file
-6. Edit `config/database.yml` with your Postgres username and password (never fear: this file will not be committed to the repo).
-7. On Terminal (or other CLI), run the commands `rails db:setup` and `rails db:migrate` to create & configure databases.
-8. Run the command `bundle install` to install all gems.
-9. Run the command `rails server` to run the app locally on port 3000.
-10. In your browser, navigate to `localhost:3000`. You should see the application running.
+5. Create `database.yml` file in your `config` folder.  
+6. Add the following code for your local [config/database.yml](https://gist.github.com/msarit/6ec31a5c1feef81ce44d3810bf58cdfd) file
+7. Edit `config/database.yml` with your Postgres username and password (never fear: this file will not be committed to the repo).
+8. On Terminal (or other CLI), run the commands `rails db:setup` and `rails db:migrate` to create & configure databases.
+9. Run the command `bundle install` to install all gems.
+10. Run the command `rails server` to run the app locally on port 3000.
+11. In your browser, navigate to `localhost:3000`. You should see the application running.
 
 If you run into any problems installing the app locally, please open an Issue. Thanks!
