@@ -13,9 +13,9 @@ RSpec.describe Worker, type: :model do
 	end
 
 	describe "worker_full_name method" do
-		subject { test_worker }
-
-		it {expect(test_worker.worker_full_name).to eq("Jon Snow")}
+		it "should return the first and last name of the worker, separated by a space" do
+            expect(test_worker.worker_full_name).to eq("Jon Snow")
+        end
 	end
 
 end
