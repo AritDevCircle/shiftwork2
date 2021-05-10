@@ -33,12 +33,16 @@ class Shift < ApplicationRecord
   private
 
   def shift_not_too_short
+    return if self.shift_start.blank? || self.shift_end.blank?
+
     if ((self.shift_end - self.shift_start) / 1.hour) < 1
       errors.add(:shift, "duration must be at least 1 hour!")
     end
   end
 
   def shift_ends_after_start
+    return if self.shift_start.blank? || self.shift_end.blank?
+    
     if self.shift_end < self.shift_start
       errors.add(:shift, "cannot end before it starts!")
     end
