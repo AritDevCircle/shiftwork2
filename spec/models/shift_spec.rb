@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Shift, type: :model do
-  let(:shift1) { create(:shift, :bartender_role, :filled_shift) }
+  let(:sample_shift) { create(:shift, :bartender_role, :filled_shift) }
   
   
   describe "validations" do
-    subject { shift1 }
+    subject { sample_shift }
 
     it { is_expected.to validate_presence_of(:shift_role) }
     it { is_expected.to validate_presence_of(:shift_description) }
@@ -45,13 +45,13 @@ RSpec.describe Shift, type: :model do
 
   describe "can_be_dropped?" do 
     it "should return true when shift starts 24 hours or more from current time" do
-      shift2 = create(:shift, :chef_role, :filled_shift, shift_start: DateTime.now + 72.hours, shift_end: DateTime.now + 78.hours)
-      expect(shift2.can_be_dropped?).to be(true)
+      sample_shift = create(:shift, :chef_role, :filled_shift, shift_start: DateTime.now + 72.hours, shift_end: DateTime.now + 78.hours)
+      expect(sample_shift.can_be_dropped?).to be(true)
     end
 
     it "should return false when shift ends less than 24hrs from current time" do
-      shift2 = create(:shift, :chef_role, :filled_shift, shift_start: DateTime.now + 10.hours, shift_end: DateTime.now + 14.hours)
-      expect(shift2.can_be_dropped?).to be(false)
+      sample_shift = create(:shift, :chef_role, :filled_shift, shift_start: DateTime.now + 10.hours, shift_end: DateTime.now + 14.hours)
+      expect(sample_shift.can_be_dropped?).to be(false)
     end
   end
 end
