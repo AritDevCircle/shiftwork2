@@ -4,6 +4,7 @@ FactoryBot.define do
     password  { "password123" }
     password_confirmation { "password123" }
     user_type { "organization" }
+    timezone { "UTC" }
 
     trait :worker_user_type do
       user_type { "worker" }

@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :user_type, presence: true, inclusion: { in: %w(organization worker) }
+  validates :timezone, presence: true
 
   # TO-DO: refactor like worker?
   def has_org?

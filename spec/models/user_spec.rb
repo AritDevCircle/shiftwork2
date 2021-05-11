@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
     it { is_expected.not_to allow_value("some_name@examplecom").for(:email) }
     it { is_expected.to validate_inclusion_of(:user_type).in_array(%w[organization worker]) }
     it { is_expected.to validate_length_of(:password).is_at_least(6) }
+    it { is_expected.to validate_presence_of(:timezone) }
   end
 
   describe "has_org? method" do
