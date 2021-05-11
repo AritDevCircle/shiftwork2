@@ -13,7 +13,7 @@ RSpec.describe "ShiftsControllers", type: :request do
   it "should display success message and redirect to list of shifts" do
     get new_shift_path
 
-    expect(response).to redirect_to shift_path
+    expect(response).to redirect_to organization_path(current_org_id)
     expect(response).to have_http_status(302)
 
     follow_redirect!
@@ -36,7 +36,7 @@ RSpec.describe "ShiftsControllers", type: :request do
    it "should display success message and redirect to shifts list" do
     get edit_shift_path
 
-    expect(response).to redirect_to shift_path(shifts.id)
+    expect(response).to redirect_to organization_path(current_org_id)
     expect(response).to have_http_status(200)
 
     follow_redirect!
@@ -48,7 +48,7 @@ RSpec.describe "ShiftsControllers", type: :request do
 
   describe "GET /shifts/:id" do
     it "should successfully show org all of its shifts" do
-    get shift_path
+    get shifts_path
 
     expect(response).to have_http_status(200)
     expect(response.body).to include("Your Shifts")
@@ -60,9 +60,9 @@ RSpec.describe "ShiftsControllers", type: :request do
 
   describe "POST /shifts" do
      it "should create a shift when all necessary params are supplied" do
-      post shift_path, params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_status: "open", shift_status: "filled" } }
+      post shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_status: "open", shift_status: "filled" } }
     end
-      expect(response).to redirect_to shift_path(shifts.id)
+      expect(response).to redirect_to organization_path(current_org_id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
@@ -85,7 +85,7 @@ RSpec.describe "ShiftsControllers", type: :request do
     it "should update the shift's information" do
       patch shift_path(shifts.id), params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_status: "open", shift_status: "filled" } }
 
-      expect(response).to redirect_to shift_path(shifts.id)
+      expect(response).to redirect_to organization_path(current_org_id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
@@ -107,7 +107,7 @@ describe "DELETE /shifts/:id" do
    it "should display alert message and redirect to shifts list" do
     delete shift_path(shifts.id)
 
-    expect(response).to redirect_to shift_path(shifts.id)
+    expect(response).to redirect_to organization_path(current_org_id)
     expect(response).to have_http_status(200)
 
     follow_redirect!
