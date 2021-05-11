@@ -49,7 +49,7 @@ RSpec.describe Shift, type: :model do
       expect(sample_shift.can_be_dropped?).to be(true)
     end
 
-    it "should return false when shift ends less than 24hrs from current time" do
+    it "should return false when shift starts less than 24hrs from current time" do
       sample_shift = create(:shift, :chef_role, :filled_shift, shift_start: DateTime.now + 10.hours, shift_end: DateTime.now + 14.hours)
       expect(sample_shift.can_be_dropped?).to be(false)
     end
