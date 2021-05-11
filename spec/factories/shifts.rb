@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :shift do
     association :organization
-    shift_start { "2021-12-30 12:00:00" }
-    shift_end { "2021-12-30 15:00:00" }
+    shift_start { Date.today() + 1.day }
+    shift_end { Date.today() + 1.day + 6.hours }
     shift_pay { 22 }
     worker_id { nil }
   end
