@@ -39,7 +39,7 @@ RSpec.describe Shift, type: :model do
     sample_user = create(:user, :worker_user_type)
     sample_worker = create(:worker, user_id: sample_user.id)
     sample_shift = create(:shift, :bartender_role, :filled_shift, worker_id: sample_worker.id)
-    expect(sample_worker.user_id === sample_user.id).to be(true)
+    expect(sample_shift.filled_by(sample_user)).to be(true)
     end
   end
 
