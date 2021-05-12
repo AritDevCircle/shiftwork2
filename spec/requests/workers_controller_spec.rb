@@ -18,10 +18,24 @@ RSpec.describe "WorkersControllers", type: :request do
   # end
 
   describe "GET /workers/new" do
-  #  workers #new
-  # as an org, TODO: orgs can access /workers/new page, check with group
-  # as a worker, TODO: sees the form
+    # FIXME: better description
+    it "should display Create Worker Account form when user is a worker without a worker account" do
+      Worker.destroy_all
+      login_as(worker_user.email, worker_user.password)
+      get new_worker_path
+      
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("Create Worker Account")
+    end
+    
+    # as an org, TODO: orgs can access /workers/new page, check with group
+    it "should display error message and redirect to root_path if user is a worker with an existing worker account" do
+      
+    end
 
+    it "should display error message and redirect to root_path if user is an org" do
+      
+    end
   end
 
   describe "POST /workers" do
