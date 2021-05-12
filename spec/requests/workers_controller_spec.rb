@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "WorkersControllers", type: :request do
+  let(:user) { create(:user) }
+  let(:worker) { create(:worker) }
+
   describe "GET /workers" do
     # workers #index    
     # should this response be a 204?
@@ -9,6 +12,31 @@ RSpec.describe "WorkersControllers", type: :request do
 
   describe "POST /workers" do
     # workers #create
+    before do
+      Worker.destroy_all
+    end
+    # FIXME: getting a failure, redirect goes to login instead, why?
+    it "should create a new worker when all necessary params are supplied" do
+      post workers_path, params: { worker: { user_id: user.id, first_name: "Full", last_name: "Name", worker_city: "Cityville", worker_state:"AA", bio: ""} }
+
+      expect(response).to redirect_to users_path
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Worker Account created successfully!")
+      expect(response.body).to include("Your Worker Account Details")
+    end
+
+    fit "should display an erorr message and re-render the form if necessary params are missing" do
+      post workers_path, params: { worker: { user_id: user.id }}
+      expect(response).to redirect_to users_path
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Something went wrong.")
+    end
     # users must be logged in to access
     # with errors
         # "Something went wrong."
