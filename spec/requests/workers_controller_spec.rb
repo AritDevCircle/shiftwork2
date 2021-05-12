@@ -112,7 +112,19 @@ RSpec.describe "WorkersControllers", type: :request do
 
   describe "PUT /workers/:id" do
     # workers # full update
-    # success
+    it "should update the worker's information" do
+      login_as(worker_user.email, worker_user.password)
+
+      put worker_path(worker.id), params: { worker: { user_id: worker_user.id, first_name: "Updated", last_name: "Name", worker_city: "Cityville", worker_state:"AA", bio: ""} }
+
+      expect(response).to redirect_to user_path(worker_user.id)
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Worker Account updated successfully!")
+      expect(response.body).to include("Updated")
+    end
   end
 
   describe "DELETE /workers/:id" do
