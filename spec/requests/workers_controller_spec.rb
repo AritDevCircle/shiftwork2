@@ -25,7 +25,6 @@ RSpec.describe "WorkersControllers", type: :request do
   end
 
   describe "POST /workers" do
-    # workers #create
     before do
       Worker.destroy_all
       login_as(worker_user.email, worker_user.password)
@@ -51,11 +50,7 @@ RSpec.describe "WorkersControllers", type: :request do
     end
   end
 
-
-
   describe "GET /workers/:id" do
-    #   workers #show
-
     it "should display shifts that the worker has taken if the user is the worker" do
       login_as(worker_user.email, worker_user.password)
       get worker_path(worker.id)
@@ -66,8 +61,6 @@ RSpec.describe "WorkersControllers", type: :request do
   end
 
   describe "GET /workers/:id/edit" do
-    #   workers #edit
-
     it "should redirect to user's page with an error message if the user is not the worker" do
       login_as(org_user.email, org_user.password)
       get edit_worker_path(worker.id)
@@ -93,8 +86,6 @@ RSpec.describe "WorkersControllers", type: :request do
   end
 
   describe "PATCH /workers/:id" do
-    # workers # partial update
-
     it "should update the worker's information" do
       login_as(worker_user.email, worker_user.password)
 
@@ -111,7 +102,6 @@ RSpec.describe "WorkersControllers", type: :request do
   end
 
   describe "PUT /workers/:id" do
-    # workers # full update
     it "should update the worker's information" do
       login_as(worker_user.email, worker_user.password)
 
