@@ -107,7 +107,7 @@ RSpec.describe "WorkersControllers", type: :request do
 
       expect(response.body).to include("Worker Account updated successfully!")
       expect(response.body).to include("All Your Shifts")
-      # TODO: confirm redirect location. user/org edits redirect back to user page
+      # TODO: confirm redirect location, currently goes to worker page where we cannot confirm change. user/org edits redirect back to user page
     end
   end
 
