@@ -98,16 +98,15 @@ RSpec.describe "WorkersControllers", type: :request do
     it "should update the worker's information" do
       login_as(worker_user.email, worker_user.password)
 
-      patch worker_path(worker.id), params: { worker: { first_name:"New" } }
+      patch worker_path(worker.id), params: { worker: { first_name:"Aegon" } }
 
-      expect(response).to redirect_to worker_path(worker.id)
+      expect(response).to redirect_to user_path(worker_user.id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
 
       expect(response.body).to include("Worker Account updated successfully!")
-      expect(response.body).to include("All Your Shifts")
-      # TODO: confirm redirect location, currently goes to worker page where we cannot confirm change. user/org edits redirect back to user page
+      expect(response.body).to include("Aegon")
     end
   end
 
