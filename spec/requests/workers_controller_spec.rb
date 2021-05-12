@@ -6,18 +6,16 @@ RSpec.describe "WorkersControllers", type: :request do
   let(:worker) { create(:worker, user_id: worker_user.id) }
   let(:org) { create(:org, user_id: org_user.id) }
 
-  describe "GET /workers" do
-    it "should redirect to a 404 page " do
-      get workers_path
+  # describe "GET /workers" do
+  #   it "should redirect to a 404 page " do
+  #     login_as(worker_user.email, worker_user.password)      
+  #     get workers_path
 
-      expect(response).to have_http_status(302)
-
-      follow_redirect!
-
-      # TODO:
-      # expect(response.body).to include("Your Worker Account Details")
-    end
-  end
+  #     expect(response).to have_http_status(302)
+  #     follow_redirect!
+  #     expect(response.body).to include("Your Worker Account Details")
+  #   end
+  # end
 
   describe "GET /workers/new" do
   #  workers #new
@@ -36,8 +34,7 @@ RSpec.describe "WorkersControllers", type: :request do
     it "should create a new worker when all necessary params are supplied" do
       post workers_path, params: { worker: { user_id: worker_user.id, first_name: "Full", last_name: "Name", worker_city: "Cityville", worker_state:"AA", bio: ""} }
       
-      # FIXME: getting a failure, redirect url has a dot instead of a slash before id
-      # expect(response).to redirect_to users_path(worker_user.id)
+      expect(response).to redirect_to user_path(worker_user.id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
@@ -66,7 +63,6 @@ RSpec.describe "WorkersControllers", type: :request do
       expect(response).to have_http_status(200)
       expect(response.body).to include("All Your Shifts")
     end
-
   end
 
   describe "GET /workers/:id/edit" do
@@ -76,8 +72,7 @@ RSpec.describe "WorkersControllers", type: :request do
       login_as(org_user.email, org_user.password)
       get edit_worker_path(worker.id)
 
-      # FIXME: getting a failure, redirect url has a dot instead of a slash before id
-      # expect(response).to redirect_to users_path(org_user.id)
+      expect(response).to redirect_to user_path(org_user.id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
@@ -85,23 +80,37 @@ RSpec.describe "WorkersControllers", type: :request do
       expect(response.body).to include("You do not have authority to access that.")
       expect(response.body).to include("Your Email:")
     end
-
-    # should I test trying to edit a worker as another worker? 
     
     it "should show a worker a form to edit their account" do
       login_as(worker_user.email, worker_user.password)
       get edit_worker_path(worker.id)
-
+      
       expect(response).to have_http_status(200)
       expect(response.body).to include("Edit Workers Account")
     end
+
+    # should I test trying to edit a worker as another worker? 
   end
 
   describe "PATCH /workers/:id" do
     # workers # partial update
+
+    # it "should update the worker's information" do
+    #   login_as(worker_user.email, worker_user.password)
+
+    #   patch workers_path(worker.id), params: { worker: { first_name:"New" } }
+
+    #   expect(response).to redirect_to user_path(worker.user_id)
+    #   expect(response).to have_http_status(302)
+
+    #   follow_redirect!
+
+    #   expect(response.body).to include("New Name")
+    # end
     # success
         # "Worker Account updated successfully!"
         # follow redirect to check for changes
+        
     # missing required value or setting required value to nil
         # "Something went wrong." with a status
         # make sure we're still on the same page
