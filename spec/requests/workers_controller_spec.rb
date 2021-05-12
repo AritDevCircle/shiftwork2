@@ -56,24 +56,18 @@ RSpec.describe "WorkersControllers", type: :request do
 
 
 
-  # describe "GET /workers/:id" do
-  #   #   workers #show
+  describe "GET /workers/:id" do
+    #   workers #show
 
-  #   it "should display shifts that the worker has taken if the user is the worker" do
-  #   login_ad(worker_user.email, worker_user.password)
-  #   get worker_path(worker.id)
+    it "should display shifts that the worker has taken if the user is the worker" do
+      login_as(worker_user.email, worker_user.password)
+      get worker_path(worker.id)
 
-  #   expect(response).to have_http_status(200)
-  #   expect(response.body).to include("All Your Shifts")
-  # end
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("All Your Shifts")
+    end
 
-  #   it "should show users who are not the worker a bio" do
-  #     login_as(org_user.email, org_user.password)
-  #     get workers_path(worker.id)
-
-  #     expect(response.body).to include("waffwafw")
-  #   end
-  # end
+  end
 
   describe "GET /workers/:id/edit" do
     #   workers #edit
@@ -91,7 +85,8 @@ RSpec.describe "WorkersControllers", type: :request do
       expect(response.body).to include("You do not have authority to access that.")
       expect(response.body).to include("Your Email:")
     end
-    # as another worker? 
+
+    # should I test trying to edit a worker as another worker? 
     
     it "should show a worker a form to edit their account" do
       login_as(worker_user.email, worker_user.password)
