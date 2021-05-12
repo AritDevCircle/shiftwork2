@@ -95,31 +95,25 @@ RSpec.describe "WorkersControllers", type: :request do
   describe "PATCH /workers/:id" do
     # workers # partial update
 
-    # it "should update the worker's information" do
-    #   login_as(worker_user.email, worker_user.password)
+    it "should update the worker's information" do
+      login_as(worker_user.email, worker_user.password)
 
-    #   patch workers_path(worker.id), params: { worker: { first_name:"New" } }
+      patch worker_path(worker.id), params: { worker: { first_name:"New" } }
 
-    #   expect(response).to redirect_to user_path(worker.user_id)
-    #   expect(response).to have_http_status(302)
+      expect(response).to redirect_to worker_path(worker.id)
+      expect(response).to have_http_status(302)
 
-    #   follow_redirect!
+      follow_redirect!
 
-    #   expect(response.body).to include("New Name")
-    # end
-    # success
-        # "Worker Account updated successfully!"
-        # follow redirect to check for changes
-        
-    # missing required value or setting required value to nil
-        # "Something went wrong." with a status
-        # make sure we're still on the same page
+      expect(response.body).to include("Worker Account updated successfully!")
+      expect(response.body).to include("All Your Shifts")
+      # TODO: confirm redirect location. user/org edits redirect back to user page
+    end
   end
 
   describe "PUT /workers/:id" do
     # workers # full update
     # success
-    # missing required value
   end
 
   describe "DELETE /workers/:id" do
