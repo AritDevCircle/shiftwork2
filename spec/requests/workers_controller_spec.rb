@@ -6,19 +6,7 @@ RSpec.describe "WorkersControllers", type: :request do
   let(:worker) { create(:worker, user_id: worker_user.id) }
   let(:org) { create(:org, user_id: org_user.id) }
 
-  # describe "GET /workers" do
-  #   it "should redirect to a 404 page " do
-  #     login_as(worker_user.email, worker_user.password)      
-  #     get workers_path
-
-  #     expect(response).to have_http_status(302)
-  #     follow_redirect!
-  #     expect(response.body).to include("Your Worker Account Details")
-  #   end
-  # end
-
   describe "GET /workers/new" do
-    # FIXME: better description
     it "should display Create Worker Account form when user is a worker without a worker account" do
       Worker.destroy_all
       login_as(worker_user.email, worker_user.password)
@@ -34,7 +22,7 @@ RSpec.describe "WorkersControllers", type: :request do
     end
 
     it "should display error message and redirect to root_path if user is an org" do
-      
+
     end
   end
 
