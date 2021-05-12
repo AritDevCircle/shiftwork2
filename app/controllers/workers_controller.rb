@@ -34,7 +34,7 @@ class WorkersController < ApplicationController
   def update
     if @worker.update(worker_params)
       flash[:success] = "Worker Account updated successfully!"
-      redirect_to @worker
+      redirect_to user_path(current_user.id)
     else
       flash[:danger] = "Something went wrong."
       render :edit, status: :unprocessable_entity
