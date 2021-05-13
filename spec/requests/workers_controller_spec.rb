@@ -61,7 +61,7 @@ RSpec.describe "WorkersControllers", type: :request do
       expect(response.body).to include("Your Worker Account Details")
     end
 
-    it "should display the 'Create Shift' form if one or more necessary params are missing" do
+    it "should display the 'Create Worker Account' form if one or more necessary params are missing" do
       post workers_path, params: { worker: { first_name: nil } }
       
       expect(response.body).to include("Something went wrong.")
@@ -100,10 +100,6 @@ RSpec.describe "WorkersControllers", type: :request do
       expect(response.body).to include("You do not have authority to access that.")
       expect(response.body).to include("Your Email:")
     end
-    
-
-
-    # should I test trying to edit a worker as another worker? 
   end
 
   describe "PATCH /workers/:id" do
@@ -119,22 +115,6 @@ RSpec.describe "WorkersControllers", type: :request do
 
       expect(response.body).to include("Worker Account updated successfully!")
       expect(response.body).to include("Aegon")
-    end
-  end
-
-  describe "PUT /workers/:id" do
-    it "should update the sample_worker's information" do
-      login_as(sample_worker_user.email, sample_worker_user.password)
-
-      put worker_path(sample_worker.id), params: { worker: { user_id: sample_worker_user.id, first_name: "Updated", last_name: "Name", worker_city: "Cityville", worker_state:"AA", bio: ""} }
-
-      expect(response).to redirect_to user_path(sample_worker_user.id)
-      expect(response).to have_http_status(302)
-
-      follow_redirect!
-
-      expect(response.body).to include("Worker Account updated successfully!")
-      expect(response.body).to include("Updated")
     end
   end
 end
