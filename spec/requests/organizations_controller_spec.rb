@@ -5,7 +5,6 @@ RSpec.describe "OrganizationsControllers", type: :request do
   let(:worker_user) { create(:user, :worker_user_type) }
 
   describe "GET /organizations/new" do
-
     it "should display Create Organization form when user is logged in as organization user_type but hasn't the org account yet" do
       Organization.destroy_all
       login_as(org_user.email, org_user.password)
@@ -46,7 +45,6 @@ RSpec.describe "OrganizationsControllers", type: :request do
   end
 
   describe "GET /organizations/:id/edit" do
-
     it "should display Edit Organization form when user is logged in as an organization" do
       Organization.destroy_all
       login_as(org_user.email, org_user.password)
@@ -74,7 +72,6 @@ RSpec.describe "OrganizationsControllers", type: :request do
 
   # show
   describe "GET /organizations/:id" do
-
     it "should display Organization info when user is logged in as the current organization" do
       Organization.destroy_all
       login_as(org_user.email, org_user.password)
@@ -102,7 +99,6 @@ RSpec.describe "OrganizationsControllers", type: :request do
 
   # create
   describe "POST /organizations" do
-
     before do
       Organization.destroy_all
       login_as(org_user.email, org_user.password)
@@ -129,6 +125,22 @@ RSpec.describe "OrganizationsControllers", type: :request do
 
   # update
   describe "PATCH /organizations/:id" do
-  end
+    before do
+      Organization.destroy_all
+      login_as(org_user.email, org_user.password)
+    end
 
+    it "should update the organization's information" do
+      test_org = create(:organization, user_id: org_user.id)
+      patch organization_path(test_org.id), params: { organization: { org_city:"Some other City" } }
+
+      expect(response).to redirect_to user_path(org_user.id)
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Organization updated successfully!")
+      expect(response.body).to include("Some other City")
+    end
+  end
 end
