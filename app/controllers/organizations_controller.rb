@@ -17,7 +17,18 @@ class OrganizationsController < ApplicationController
   end
 
   def new
-    @organization = Organization.new
+    @is_org = User.where(id: current_user.id, user_type: "organization").first
+    @has_org = Organization.where(user_id: current_user.id).first
+
+    if @is_org && @has_org.blank?
+        @organization = Organization.new
+    elsif @is_org && @has_org
+        flash[:danger] = "You have already created your organization."
+        redirect_to user_path(current_user.id)
+    else
+        flash[:danger] = "You do not have authority to access that."
+        redirect_to user_path(current_user.id)
+    end
   end
 
   def create
