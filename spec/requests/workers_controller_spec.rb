@@ -27,7 +27,7 @@ RSpec.describe "WorkersControllers", type: :request do
       follow_redirect!
 
       expect(response.body).to include("You are unauthorized to create new worker.")
-      expect(response.body).to include("Create Worker Account")
+      expect(response.body).to include("Your Email:")
     end
 
     it "should display error message and redirect to user page if user is an org" do
@@ -39,7 +39,7 @@ RSpec.describe "WorkersControllers", type: :request do
       follow_redirect!
 
       expect(response.body).to include("You are unauthorized to create new worker.")
-      expect(response.body).to include("Create Worker Account")
+      expect(response.body).to include("Your Email:")
     end
   end
 
