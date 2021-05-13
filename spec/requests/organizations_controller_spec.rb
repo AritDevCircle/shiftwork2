@@ -43,10 +43,10 @@ RSpec.describe "OrganizationsControllers", type: :request do
 
       expect(response.body).to include("You have already created your organization.")
     end
-
   end
 
   describe "GET /organizations/:id/edit" do
+
     it "should display Edit Organization form when user is logged in as an organization" do
       Organization.destroy_all
       login_as(org_user.email, org_user.password)
@@ -74,6 +74,7 @@ RSpec.describe "OrganizationsControllers", type: :request do
 
   # show
   describe "GET /organizations/:id" do
+
     it "should display Organization info when user is logged in as the current organization" do
       Organization.destroy_all
       login_as(org_user.email, org_user.password)
@@ -101,7 +102,29 @@ RSpec.describe "OrganizationsControllers", type: :request do
 
   # create
   describe "POST /organizations" do
-  
+
+    before do
+      Organization.destroy_all
+      login_as(org_user.email, org_user.password)
+    end
+
+    it "should create a new organization when all necessary params are supplied" do
+      post organizations_path, params: { organization: { org_name: "Test org name", org_description: "Test org description", org_address: "Test org address", org_city: "The City", org_state: "TO" } }
+
+      expect(response).to redirect_to user_path(org_user.id)
+      expect(response).to have_http_status(302)
+
+      follow_redirect!
+
+      expect(response.body).to include("Organization created successfully!")
+    end
+
+    it "should display the 'Create organization' view if one or more necessary params are missing" do
+      post organizations_path, params: { organization: { org_name: "Test org name", org_description: "Test org description", org_address: "", org_city: "The City", org_state: "TO" } }
+
+      expect(response.body).to include("Something went wrong.")
+      expect(response.body).to include("<h1>Create Organization</h1>")
+    end
   end
 
   # update
