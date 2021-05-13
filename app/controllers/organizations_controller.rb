@@ -17,7 +17,19 @@ class OrganizationsController < ApplicationController
   end
 
   def new
-    @organization = Organization.new
+    # check if the user is an organization before showing the create organization form.
+    if current_user.user_type == 'organization' 
+      # if it is an organization, check if the organization profile has been already created
+      if current_user.has_org?
+        flash[:warning] = "You have already created your organization."
+        redirect_to user_path(current_user.id)
+      else
+        @organization = Organization.new
+      end
+    else
+      flash[:danger] = "You do not have authority to access that."
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def create
