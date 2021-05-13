@@ -17,12 +17,12 @@ class OrganizationsController < ApplicationController
   end
 
   def new
-    @is_org = User.where(id: current_user.id, user_type: "organization").first
+    @is_org_user = User.where(id: current_user.id, user_type: "organization").first
     @has_org = Organization.where(user_id: current_user.id).first
 
-    if @is_org && @has_org.blank?
+    if @is_org_user && @has_org.blank?
         @organization = Organization.new
-    elsif @is_org && @has_org
+    elsif @is_org_user && @has_org
         flash[:danger] = "You have already created your organization."
         redirect_to user_path(current_user.id)
     else
