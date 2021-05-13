@@ -14,10 +14,10 @@ class WorkersController < ApplicationController
   end
 
   def new
-    @existing_worker = Worker.where(user_id: current_user.id)
-    @existing_org = Organization.where(user_id: current_user.id)
+    @existing_worker = Worker.where(user_id: current_user.id).first
+    @is_user_worker = User.where(id: current_user.id, user_type: 'worker').first
 
-    if @existing_worker.blank? && @existing_org.blank?
+    if @is_user_worker && @existing_worker.blank?
       @worker = Worker.new
     else
       flash[:danger] = "You are unauthorized to create a new worker."
