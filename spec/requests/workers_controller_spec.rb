@@ -3,12 +3,14 @@ require 'rails_helper'
 RSpec.describe "WorkersController", type: :request do
   let(:sample_org_user) { create(:user) }
   let(:sample_worker_user) { create(:user, :worker_user_type) }
-  let(:sample_worker) { create(:worker, user_id: sample_worker_user.id) }
-  let(:sample_org) { create(:organization, user_id: sample_org_user.id) }
+  # let(:sample_worker) { create(:worker, user_id: sample_worker_user.id) }
+  # let(:sample_org) { create(:organization, user_id: sample_org_user.id) }
   
   describe "GET /workers/:id action" do
-    it "should display shifts that the worker has taken if worker views their page" do
+    it "should successfully display list of worker's shifts to the worker" do
       login_as(sample_worker_user.email, sample_worker_user.password)
+      sample_worker = create(:worker, user_id: sample_worker_user.id)
+
       get worker_path(sample_worker.id)
 
       expect(response).to have_http_status(200)
@@ -26,7 +28,8 @@ RSpec.describe "WorkersController", type: :request do
       expect(response.body).to include("Create Worker Account")
     end
     
-    it "should display error message and redirect to user page if logged_in user is a worker with an existing worker account" do
+    it "should display warning when logged_in user has an existing worker account" do
+      sample_worker = create(:worker, user_id: sample_worker_user.id)
       login_as(sample_worker_user.email, sample_worker_user.password)
       get new_worker_path
 
@@ -34,11 +37,11 @@ RSpec.describe "WorkersController", type: :request do
 
       follow_redirect!
 
-      expect(response.body).to include("You are unauthorized to create new worker.")
-      expect(response.body).to include("Your Email:")
+      expect(response.body).to include("You are unauthorized to create a new worker.")
+      expect(response.body).to_not include("Create Worker Account")
     end
 
-    it "should display error message and redirect to user page if user is an org" do
+    it "should display warning when logged_in user is an org" do
       login_as(sample_org_user.email, sample_org_user.password)
       get new_worker_path
 
@@ -46,8 +49,8 @@ RSpec.describe "WorkersController", type: :request do
 
       follow_redirect!
 
-      expect(response.body).to include("You are unauthorized to create new worker.")
-      expect(response.body).to include("Your Email:")
+      expect(response.body).to include("You are unauthorized to create a new worker.")
+      expect(response.body).to_not include("Create Worker Account")
     end
   end
 
@@ -61,12 +64,11 @@ RSpec.describe "WorkersController", type: :request do
       post workers_path, params: { worker: { user_id: sample_worker_user.id, first_name: "Full", last_name: "Name", worker_city: "Sample City", worker_state:"AA", bio: "Sample Bio"} }
       
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to user_path(sample_worker_user.id)
 
       follow_redirect!
 
       expect(response.body).to include("Worker Account created successfully!")
-      expect(response.body).to include("Your Worker Account Details")
+      expect(response.body).to include("Sample City")
     end
 
     it "should display the 'Create Worker Account' form if one or more necessary params are missing" do
@@ -78,31 +80,34 @@ RSpec.describe "WorkersController", type: :request do
   end
 
   describe "GET /workers/:id/edit action" do
+    before do
+      @sample_worker = create(:worker, user_id: sample_worker_user.id)
+    end
     # indirectly tests verify_access private method 
     it "should successfully display an 'Edit Worker' form to the worker" do
       login_as(sample_worker_user.email, sample_worker_user.password)
-      get edit_worker_path(sample_worker.id)
+      get edit_worker_path(@sample_worker.id)
 
       expect(response).to have_http_status(200)
       expect(response.body).to include("Edit Workers Account")
     end
 
-    it "should display error and redirect to users page if the user is not the worker" do
+    it "should display warning if the user is not the worker" do
       login_as(sample_org_user.email, sample_org_user.password)
-      get edit_worker_path(sample_worker.id)
+      get edit_worker_path(@sample_worker.id)
 
-      expect(response).to redirect_to user_path(sample_org_user.id)
       expect(response).to have_http_status(302)
 
       follow_redirect!
 
       expect(response.body).to include("You do not have authority to access that.")
-      expect(response.body).to include("Your Email:")
+      expect(response.body).to_not include("Edit Workers Account")
     end
   end
 
   describe "PATCH /workers/:id" do
     it "should update the worker's information" do
+      sample_worker = create(:worker, user_id: sample_worker_user.id)
       login_as(sample_worker_user.email, sample_worker_user.password)
 
       patch worker_path(sample_worker.id), params: { worker: { first_name:"Aegon" } }
