@@ -53,6 +53,7 @@ RSpec.describe "OrganizationsController", type: :request do
       follow_redirect!
 
       expect(response.body).to include("You do not have authority to access that.")
+      expect(response.body).not_to include("<h1>Create Organization</h1>")
     end
 
     it "should display warning when an org is already created" do
@@ -65,6 +66,7 @@ RSpec.describe "OrganizationsController", type: :request do
       follow_redirect!
 
       expect(response.body).to include("You have already created your organization.")
+      expect(response.body).not_to include("<h1>Create Organization</h1>")
     end
   end
 
@@ -82,6 +84,7 @@ RSpec.describe "OrganizationsController", type: :request do
       follow_redirect!
 
       expect(response.body).to include("Organization created successfully!")
+      expect(response.body).not_to include("<h1>Create Organization</h1>")
     end
 
     it "should display the 'Create org' view if one or more necessary params are missing" do
@@ -113,6 +116,7 @@ RSpec.describe "OrganizationsController", type: :request do
       follow_redirect!
 
       expect(response.body).to include("You do not have authority to access that.")
+      expect(response.body).not_to include('value="123 Some Street"')
     end
   end
 
