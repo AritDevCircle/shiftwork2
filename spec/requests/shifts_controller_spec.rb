@@ -1,117 +1,142 @@
 require 'rails_helper'
 
 RSpec.describe "ShiftsControllers", type: :request do
+  let(:sample_org) { create(:organization) }
+  let(:sample_user) { create(:user) }
+
+  #describe "GET /index action" do
+    #it "should redirect to organization show page if current_user.has_org?" do
+      #org_user = User.find_by(id: sample_org.user_id)
+      #login_as(org_user.email, "password123")
+      #get shifts_path
+
+      #expect(response).to have_http_status(302)
+
+      #follow_redirect!
+
+      #expect(response.body).to include("Your Shifts")
+    #end
+
+    #it "should show all shifts if current_user does not have org" do
+      #shift1 = create(:shift, :chef_role, :open_shift, organization_id: sample_org.id)
+      #login_as(sample_user.email, "password123")
+      #get shifts_path
+
+      #expect(response.body).to include("List of All Shifts")
+      #expect(response.body).to include("Chef")
+    #end
+  #end
   
-  describe "GET /shifts/new" do
-    it "should successfully display Create Shift form if user is org" do
-    get new_shift_path
+  #describe "GET /shifts/new action" do
+    #it "should successfully display Create Shift form if current_user has org" do
+      #org_user = User.find_by(id: sample_org.user_id)
+      #login_as(org_user.email, "password123")
+      #get new_shift_path
 
-    expect(response).to have_http_status(200)
-    expect(response.body).to include("Create Shift")
-  end
+      #expect(response).to have_http_status(200)
+      #expect(response.body).to include("Create Shift")
+    #end
 
-  it "should display success message and redirect to list of shifts" do
-    get new_shift_path
+    #it "should display error and redirect to shifts page if current_user does not have org" do
+      #login_as(sample_user.email, "password123")
+      #get new_shift_path
 
-    expect(response).to redirect_to organization_path(current_org_id)
-    expect(response).to have_http_status(302)
+      #expect(response).to have_http_status(302)
 
-    follow_redirect!
+      #follow_redirect!
 
-    expect(response.body).to include("Shift created successfully!")
-  end
-  end
+      #expect(response.body).to include("You are unauthorized to create new shifts.")
+      #expect(response.body).to include("List of All Shifts")
+    #end
+  #end
 
+  #describe "POST /shifts action" do
+    #it "should create a shift when all necessary params are supplied" do  
+      #org_user = User.find_by(id: sample_org.user_id)   
+      #login_as(org_user.email, "password123")
+      
+      #post shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_open: true } }
+      
+      #expect(response).to have_http_status(302)
 
-  describe "GET /shifts/:id/edit" do
-    it "should allow org edit its shift" do
-    get edit_shift_path
+      #follow_redirect!
 
-    expect(response).to have_http_status(200)
-    expect(response.body).to include("NOTE: If you are NOT changing the dates, you must enter the current dates to update your shift.")
-    expect(response.body).to include("Edit Shift")
-    expect(response.body).to include("Update Shift")
-   end
+      #expect(response.body).to include("Shift created successfully!")
+    #end
 
-   it "should display success message and redirect to shifts list" do
-    get edit_shift_path
+    #it "should display the 'Create Shift' form if one or more necessary params are missing" do
+      #org_user = User.find_by(id: sample_org.user_id)
+      #login_as(org_user.email, "password123")
 
-    expect(response).to redirect_to organization_path(current_org_id)
-    expect(response).to have_http_status(200)
+      #post shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_open: true } }
 
-    follow_redirect!
+      #expect(response).to have_http_status(302)
 
-    expect(response.body).to include("Shift updated successfully!")
-  end
-  end
+      #follow_redirect!
 
+      #expect(response.body).to include("Shift description is too short (minimum is 10 characters)")
+      #expect(response.body).to include("Create Shift")
+    #end
+  #end
 
-  describe "GET /shifts/:id" do
-    it "should successfully show org all of its shifts" do
-    get shifts_path
+  #describe "PATCH /shifts action" do
+    #it "should update the shift's information" do
+      #org_user = User.find_by(id: sample_org.user_id)
+      #login_as(org_user.email, "password123")
+      
+      #patch shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_open: true } }
+      
+      #expect(response).to have_http_status(302)
 
-    expect(response).to have_http_status(200)
-    expect(response.body).to include("Your Shifts")
-    expect(response.body).to include("Create Shift")
-  end
-  end
+      #follow_redirect!
 
+      #expect(response.body).to include("Shift updated successfully!")
+    #end
 
+    it "should display the 'Update Shift' form if one or more necessary params are missing" do
+      org_user = User.find_by(id: sample_org.user_id)
+      login_as(org_user.email, "password123")
 
-  describe "POST /shifts" do
-     it "should create a shift when all necessary params are supplied" do
-      post shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_status: "open", shift_status: "filled" } }
-    end
-      expect(response).to redirect_to organization_path(current_org_id)
+      patch shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_open: true } }
+
       expect(response).to have_http_status(302)
 
       follow_redirect!
 
-      expect(response.body).to include("Shift created successfully!")
-    end
-
-    it "should display the 'Create Shift' view if one or more necessary params are missing" do
-      post shifts_path, params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_status: "open", shift_status: "filled" } }
-
-      expect(response.body).to include("Shift description can't be blank, Shift description is too short(minimum is 10 characters)")
-      expect(response.body).to include("Shift pay must be greater than or equal to 0")
-      expect(response.body).to include("Shift duration must be at least 1 hour!")
-      expect(response.body).to include("Shift cannot end before it starts")
+      expect(response.body).to include("Shift description is too short (minimum is 10 characters)")
+      expect(response.body).to include("Update Shift")
     end
   end
 
+  describe "DELETE /shifts action" do
+    it "should delete a shift" do
+      org_user = User.find_by(id: sample_org.user_id)   
+      login_as(org_user.email, "password123")
 
-  describe "PATCH /shifts/:id" do
-    it "should update the shift's information" do
-      patch shift_path(shifts.id), params: { shift: { shift_role: "Bartender", shift_description: "Mix all the drinks", shift_start: "2021-12-30 12:00:00", shift_end: "2021-12-30 15:00:00", shift_pay: "22", shift_status: "open", shift_status: "filled" } }
+      delete shifts_path
+  
+      expect(response).to have_http_status(302)
+      expect(response.body).to include("Delete")
 
-      expect(response).to redirect_to organization_path(current_org_id)
+      follow_redirect!
+  
+      expect(response.body).to include("Shift deleted successfully!")
+    end
+  
+    it "should display alert message and redirect to shifts list" do
+      org_user = User.find_by(id: sample_org.user_id)   
+      login_as(org_user.email, "password123")
+
+      delete shifts_path
+  
       expect(response).to have_http_status(302)
 
       follow_redirect!
-
-      expect(response.body).to include("Shift updated successfully!")
-  end
+      
+      expect(response.body).to include("Delete")
+    end
+  end 
 end
 
 
-describe "DELETE /shifts/:id" do
-  it "should delete a shift" do
-    delete shift_path(shifts.id)
-
-    expect(response).to have_http_status(200)
-    expect(response.body).to include("Delete")
-    expect(response.body).to include("Pop up alert confirm message")
-   end
-
-   it "should display alert message and redirect to shifts list" do
-    delete shift_path(shifts.id)
-
-    expect(response).to redirect_to organization_path(current_org_id)
-    expect(response).to have_http_status(200)
-
-    follow_redirect!
-
-    expect(response.body).to include("Shift deleted successfully!")
-  end
-  end
+ 
