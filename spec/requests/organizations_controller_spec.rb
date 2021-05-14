@@ -9,6 +9,32 @@ RSpec.describe "OrganizationsController", type: :request do
     Worker.destroy_all
   end
 
+  # show
+  describe "GET /organizations/:id" do
+    it "should display Org info when user is the current organization" do
+      login_as(org_user.email, org_user.password)
+      test_org = create(:organization, user_id: org_user.id)
+      get organization_path(test_org.id)
+
+      expect(response).to have_http_status(200)
+
+      expect(response.body).to include("Your Shifts")
+      expect(response.body).to include("Create Shift")
+    end
+
+    it "should display basic Org info when user is a worker" do
+      login_as(worker_user.email, worker_user.password)
+      test_org = create(:organization, user_id: org_user.id)
+      get organization_path(test_org.id)
+
+      expect(response).to have_http_status(200)
+
+      expect(response.body).not_to include("Your Shifts")
+      expect(response.body).not_to include("Create Shift")
+    end
+  end
+
+  # new
   describe "GET /organizations/new" do
     it "should display new form when organization hasn't an account yet" do
       login_as(org_user.email, org_user.password)
@@ -42,55 +68,6 @@ RSpec.describe "OrganizationsController", type: :request do
     end
   end
 
-  # Running this to test the private verify_access method inside the org. controller 
-  describe "GET /organizations/:id/edit" do
-    it "should display Edit Org form when user is an organization" do
-      login_as(org_user.email, org_user.password)
-      test_org = create(:organization, user_id: org_user.id)
-      get edit_organization_path(test_org.id)
-
-      expect(response).to have_http_status(200)
-      expect(response.body).to include('value="123 Some Street"')
-    end
-
-    it "should redirect and display alert when user is a worker" do
-      login_as(worker_user.email, worker_user.password)
-      test_org = create(:organization, user_id: org_user.id)
-      get edit_organization_path(test_org.id)
-
-      expect(response).to have_http_status(302)
-  
-      follow_redirect!
-
-      expect(response.body).to include("You do not have authority to access that.")
-    end
-  end
-
-  # show
-  describe "GET /organizations/:id" do
-    it "should display Org info when user is the current organization" do
-      login_as(org_user.email, org_user.password)
-      test_org = create(:organization, user_id: org_user.id)
-      get organization_path(test_org.id)
-
-      expect(response).to have_http_status(200)
-
-      expect(response.body).to include("Your Shifts")
-      expect(response.body).to include("Create Shift")
-    end
-
-    it "should display basic Org info when user is a worker" do
-      login_as(worker_user.email, worker_user.password)
-      test_org = create(:organization, user_id: org_user.id)
-      get organization_path(test_org.id)
-
-      expect(response).to have_http_status(200)
-
-      expect(response.body).not_to include("Your Shifts")
-      expect(response.body).not_to include("Create Shift")
-    end
-  end
-
   # create
   describe "POST /organizations" do
     before do
@@ -112,6 +89,30 @@ RSpec.describe "OrganizationsController", type: :request do
 
       expect(response.body).to include("Something went wrong.")
       expect(response.body).to include("<h1>Create Organization</h1>")
+    end
+  end
+
+  # Edit: The target is to test the private verify_access method inside the org. controller 
+  describe "GET /organizations/:id/edit" do
+    it "should display Edit Org form when user is an organization" do
+      login_as(org_user.email, org_user.password)
+      test_org = create(:organization, user_id: org_user.id)
+      get edit_organization_path(test_org.id)
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('value="123 Some Street"')
+    end
+
+    it "should redirect and display alert when user is a worker" do
+      login_as(worker_user.email, worker_user.password)
+      test_org = create(:organization, user_id: org_user.id)
+      get edit_organization_path(test_org.id)
+
+      expect(response).to have_http_status(302)
+  
+      follow_redirect!
+
+      expect(response.body).to include("You do not have authority to access that.")
     end
   end
 
