@@ -14,7 +14,15 @@ class WorkersController < ApplicationController
   end
 
   def new
-    @worker = Worker.new
+    @existing_worker = Worker.where(user_id: current_user.id).first
+    @is_user_worker = User.where(id: current_user.id, user_type: 'worker').first
+
+    if @is_user_worker && @existing_worker.blank?
+      @worker = Worker.new
+    else
+      flash[:danger] = "You are unauthorized to create a new worker."
+      redirect_to shifts_path
+    end
   end
 
   def edit
