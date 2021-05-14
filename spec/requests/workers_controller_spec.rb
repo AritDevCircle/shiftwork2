@@ -1,24 +1,32 @@
 require 'rails_helper'
 
-RSpec.describe "WorkersControllers", type: :request do
+RSpec.describe "WorkersController", type: :request do
   let(:sample_org_user) { create(:user) }
   let(:sample_worker_user) { create(:user, :worker_user_type) }
   let(:sample_worker) { create(:worker, user_id: sample_worker_user.id) }
   let(:sample_org) { create(:organization, user_id: sample_org_user.id) }
+  
+  describe "GET /workers/:id action" do
+    it "should display shifts that the worker has taken if worker views their page" do
+      login_as(sample_worker_user.email, sample_worker_user.password)
+      get worker_path(sample_worker.id)
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("All Your Shifts")
+    end
+  end
 
   describe "GET /workers/new action" do
-
-    it "should successfully display Create Worker Account form when user has a worker type and does not have a worker account" do
+    it "should successfully display 'Create Worker' form if logged_in user is worker user_type but doesn't have worker account" do
       Worker.destroy_all
       login_as(sample_worker_user.email, sample_worker_user.password)
       get new_worker_path
       
       expect(response).to have_http_status(200)
-
       expect(response.body).to include("Create Worker Account")
     end
     
-    it "should display error message and redirect to user page if user is a worker with an existing worker account" do
+    it "should display error message and redirect to user page if logged_in user is a worker with an existing worker account" do
       login_as(sample_worker_user.email, sample_worker_user.password)
       get new_worker_path
 
@@ -69,17 +77,8 @@ RSpec.describe "WorkersControllers", type: :request do
     end
   end
 
-  describe "GET /workers/:id action" do
-    it "should display shifts that the worker has taken if worker views their page" do
-      login_as(sample_worker_user.email, sample_worker_user.password)
-      get worker_path(sample_worker.id)
-
-      expect(response).to have_http_status(200)
-      expect(response.body).to include("All Your Shifts")
-    end
-  end
-
   describe "GET /workers/:id/edit action" do
+    # indirectly tests verify_access private method 
     it "should successfully display an 'Edit Worker' form to the worker" do
       login_as(sample_worker_user.email, sample_worker_user.password)
       get edit_worker_path(sample_worker.id)
