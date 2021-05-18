@@ -9,7 +9,7 @@ class ShiftsController < ApplicationController
     if current_user.has_org?
       redirect_to organization_path(current_org_id)
     else
-      @shifts = Shift.all.order("updated_at DESC")
+      @shifts = Shift.where("shift_start > ?", Time.now.utc).order("updated_at DESC")
     end
   end
 
