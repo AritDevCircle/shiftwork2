@@ -10,6 +10,7 @@ class Shift < ApplicationRecord
   
   validate :shift_not_too_short
   validate :shift_ends_after_start
+  validate :shift_start_before_current_date?
 
   def shift_org_name
     Organization.where(id: self.organization_id).first.org_name
@@ -45,6 +46,14 @@ class Shift < ApplicationRecord
     
     if self.shift_end < self.shift_start
       errors.add(:shift, "cannot end before it starts!")
+    end
+  end
+
+  def shift_start_before_current_date?
+    if shift_start < Time.zone.now - 100
+      errors.add :shift_start, "cannot be in the past" 
+    elsif shift_start < Time.zone.now + 3600
+      errors.add :shift_start, "must be created at least an hour before start" 
     end
   end
 
