@@ -32,9 +32,12 @@ class Shift < ApplicationRecord
   end
 
   private
+  def any_shift_time_blank?
+    return if self.shift_start.blank? || self.shift_end.blank?
+  end
 
   def shift_not_too_short
-    return if self.shift_start.blank? || self.shift_end.blank?
+    any_shift_time_blank?
 
     if ((self.shift_end - self.shift_start) / 1.hour) < 1
       errors.add(:shift, "duration must be at least 1 hour!")
@@ -42,7 +45,7 @@ class Shift < ApplicationRecord
   end
 
   def shift_ends_after_start
-    return if self.shift_start.blank? || self.shift_end.blank?
+    any_shift_time_blank?
     
     if self.shift_end < self.shift_start
       errors.add(:shift, "cannot end before it starts!")
@@ -50,7 +53,7 @@ class Shift < ApplicationRecord
   end
 
   def shift_start_before_current_date?
-    return if self.shift_start.blank? || self.shift_end.blank?
+    any_shift_time_blank?
     if shift_start < Time.zone.now - 100
       errors.add(:shift_start, "cannot be in the past") 
     elsif shift_start < Time.zone.now + 3600
