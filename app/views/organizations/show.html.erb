@@ -7,7 +7,8 @@
     <div class="row container-fluid mr-0">
         <% @org_shifts.each do |shift| %>
             <div class="shift col-12 col-lg-6 col-xl-4 my-2 pl-0">
-                <div class="border bg-light p-4">
+                <div class="border bg-light <% if shift.shift_start < Time.now.utc %>border-danger<% end %> p-4">
+                <% if shift.shift_start < Time.now.utc %><h4 class="text-danger">OUTDATED shift!!</h4> <% end %>
                     <h3 class="text-info mb-4"><%= shift.shift_role %></h3>
                     <div class="row mb-3">
                         <div class="col-5 font-weight-bold">Shift Starts</div>
@@ -41,7 +42,7 @@
                     <% end %>
                     <div class="text-right">
                         <% if shift.shift_open %>
-                            <%= link_to "Edit", edit_shift_path(shift.id), class: "btn btn-primary" %>
+                            <% if shift.shift_start > Time.now.utc %><%= link_to "Edit", edit_shift_path(shift.id), class: "btn btn-primary" %><% end %>
                             <%= link_to "Delete", shift_path(shift.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
                         <% else %>
                             <p class="mt-4 text-muted">Your shift has been filled and cannot be edited or deleted</p>
