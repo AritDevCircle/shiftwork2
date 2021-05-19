@@ -50,10 +50,11 @@ class Shift < ApplicationRecord
   end
 
   def shift_start_before_current_date?
+    return if self.shift_start.blank? || self.shift_end.blank?
     if shift_start < Time.zone.now - 100
-      errors.add :shift_start, "cannot be in the past" 
+      errors.add(:shift_start, "cannot be in the past") 
     elsif shift_start < Time.zone.now + 3600
-      errors.add :shift_start, "must be created at least an hour before start" 
+      errors.add(:shift_start, "must be created at least an hour before start") 
     end
   end
 
