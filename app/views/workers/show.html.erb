@@ -5,7 +5,12 @@
     <div class="row container-fluid mr-0">
       <% @worker_shifts.each do |shift| %>
         <div class="shift col-12 col-lg-6 col-xl-4 my-2 pl-0">
-          <div class="border bg-light p-4">        
+          <div class="border bg-light p-4 <% if shift.shift_start < Time.now.utc %>border-danger<% end %> "> 
+            <% if shift.shift_start < Time.now.utc %>  
+              <div class="row mb-3">
+                <div class="col-12 font-weight-bold text-danger">CURRENT/FINISHED SHIFT</div> 
+              </div>
+            <% end %>     
             <div class="row mb-3">
               <div class="col-5 font-weight-bold">Organization Name</div> 
               <div class="col-7"><%= shift.shift_org_name %></div>
