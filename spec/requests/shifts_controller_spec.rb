@@ -6,6 +6,7 @@ RSpec.describe "ShiftsControllers", type: :request do
   let(:sample_worker_1) { create(:worker) }
   let(:sample_worker_2) { create(:worker) }
   let(:sample_shift_1) { create(:shift, :chef_role, :filled_shift, worker_id: sample_worker_1.id) }
+  let(:sample_shift_2) { create(:shift, :chef_role, :filled_shift, worker_id: sample_worker_1.id, shift_start: DateTime.now + 1.day + 2.hours, shift_end: DateTime.now + 1.day + 5.hours) }
   let(:shift_starting_soon) { create(:shift, :chef_role, :filled_shift, worker_id: sample_worker_2.id, shift_start: DateTime.now + 6.hours, shift_end: DateTime.now + 18.hours) }
 
   describe "GET /index action" do
@@ -211,7 +212,7 @@ RSpec.describe "ShiftsControllers", type: :request do
       worker_user = User.find_by(id: sample_worker_1.user_id)
       login_as(worker_user.email, "password123")
 
-      patch drop_shift_path(sample_shift_1.id)
+      patch drop_shift_path(sample_shift_2.id)
 
       expect(response).to have_http_status(302)
 
