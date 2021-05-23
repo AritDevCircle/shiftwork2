@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'errors/not_found'
+  get 'errors/internal_server_error'
   # match '/404', to: 'application#render_not_found', via: :all
 
   root 'users#index'
