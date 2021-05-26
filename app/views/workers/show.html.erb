@@ -50,7 +50,7 @@
               <div class="col-7"><%= shift.shift_pay %></div>
             </div>
                         
-            <% if shift.worker_id == current_user.id && shift.can_be_dropped? %>
+            <% if shift.filled_by(current_user) && shift.can_be_dropped? %>
               <div class="text-right">
                 <%= link_to "Drop Shift", drop_shift_path(shift), method: :put, data: { confirm: "You are about to DROP this shift. Proceed?" }, class: "btn btn-danger" %>
               </div>
