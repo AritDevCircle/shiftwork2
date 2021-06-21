@@ -38,7 +38,8 @@ The app is engineered by the fellows of Our Time For Tech's CodeCollab track. Th
 At the end of each cycle, we host Demo Day, where our codeCollab fellows present what they built to the tech community.
 
 #### Recent Demo Day recordings:
-- [Cycle 2 Demo Day](https://example.com)
+- [Cycle 2 Demo Day](https://us02web.zoom.us/rec/share/2iQMA6qbRTKoXz25phHeiXYOlq30OpVYAVSnquhBR4V_GC2ryUdkSNEOVIEpg1xq.S2rtluXeMkBwfpMS)
+(password: XJE*PnA9)
 
 <hr />
 
